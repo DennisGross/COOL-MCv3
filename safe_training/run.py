@@ -25,7 +25,7 @@ if __name__ == '__main__':
     env = SafeGym(prism_file_path, command_line_arguments['constant_definitions'],
                 command_line_arguments['max_steps'], command_line_arguments['wrong_action_penalty'],
                   command_line_arguments['reward_flag'],
-                  command_line_arguments['seed'], "PERMISSIVE INPUT",
+                  command_line_arguments['seed'],
                   command_line_arguments['disabled_features'])
 
     # Project
@@ -37,8 +37,13 @@ if __name__ == '__main__':
     print(m_project.command_line_arguments)
     m_project.create_agent(command_line_arguments,
                            env.observation_space, env.action_space)
+    m_project.create_preprocessor()
+    m_project.create_manipulator()
     m_project.mlflow_bridge.set_property_query_as_run_name(
         command_line_arguments['prop'] + " for " + command_line_arguments['constant_definitions'])
+
+    # Train
     train(m_project, env, prop_type=command_line_arguments['prop_type'])
     run_id = m_project.mlflow_bridge.get_run_id()
+    LastRunManager.write_last_run(m_project.command_line_arguments['project_name'], run_id)
     m_project.close()

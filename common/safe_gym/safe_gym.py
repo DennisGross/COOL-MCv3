@@ -18,8 +18,7 @@ class SafeGym(gym.Env):
     """
     def __init__(self, prism_file_path: str, constant_definitions: str, max_steps: int,
                  wrong_action_penalty: int, reward_flag: bool, seed: int,
-                 permissive_input: str = '', disabled_features: str = '',
-                 abstraction_input: str = ''):
+                 disabled_features: str = ''):
         """Initialize the SafeGym. The SafeGym needs the information about the PRISM environment.
 
         Args:
@@ -30,26 +29,17 @@ class SafeGym(gym.Env):
             reward_flag (bool): If true, rewards.
                                     otherwise penalties
             seed (int): random seed
-            permissive_input (str, optional):  The state variable
-                ranges for the permissive model checking. Defaults to ''.
             disabled_features (str, optional): [description]. Disabled features/state-variables
                                 (seperated by commatas. Defaults to ''.
-            abstraction_input (str, optional): [description]. The state variable ranges
-                                    for the abstraction preprocessing or
-                                    the file path to the abstraction mapping.
-                                    Defaults to ''.
         """
         assert isinstance(prism_file_path, str)
         assert isinstance(constant_definitions, str)
         assert isinstance(wrong_action_penalty, int)
         assert isinstance(reward_flag, bool)
         assert isinstance(disabled_features, str)
-        assert isinstance(permissive_input, str)
-        assert isinstance(abstraction_input, str)
         assert isinstance(seed, int)
         self.storm_bridge = StormBridge(prism_file_path, constant_definitions, wrong_action_penalty,
-                                        reward_flag, disabled_features,
-                                        permissive_input, abstraction_input, seed)
+                                        reward_flag, disabled_features, seed)
         self.action_mapper = ActionMapper.collect_actions(self.storm_bridge)
         self.steps = 0
         self.max_steps = max_steps

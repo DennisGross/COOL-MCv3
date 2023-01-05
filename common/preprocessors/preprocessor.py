@@ -12,9 +12,11 @@ class Preprocessor:
         """
         raise NotImplementedError()
 
-    def preprocess(self, rl_agent, state:np.ndarray, deploy:bool) -> np.ndarray:
+    def preprocess(self, rl_agent, state:np.ndarray, current_action_name:str, deploy:bool) -> np.ndarray:
         """
         Perform the preprocessing.
+        :param rl_agent: The RL agent
+        :param current_action_name: The current action name during incremental building process
         :param state: The state.
         :return: The preprocessed state.
         """

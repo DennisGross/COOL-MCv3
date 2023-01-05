@@ -19,3 +19,5 @@ class TestProject(unittest.TestCase):
         self.assertTrue(m_project.agent == None)
         self.assertTrue(m_project.mlflow_bridge == None)
 
+
+

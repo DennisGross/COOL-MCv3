@@ -29,7 +29,7 @@ def train(project, env, prop_type=''):
                     state = [state]
                 if project.preprocessor != None:
                     # Preprocessing
-                    state = project.preprocessor.preprocess(project.agent, state, project.command_line_arguments['deploy'])
+                    state = project.preprocessor.preprocess(project.agent, state, "", project.command_line_arguments['deploy'])
                 action = project.agent.select_action(state, project.command_line_arguments['deploy'])
                 next_state, reward, done, info = env.step(action)
                 if next_state.__class__.__name__ == 'int':
@@ -53,7 +53,7 @@ def train(project, env, prop_type=''):
                 project.agent.episodic_learn()
 
             if episode % project.command_line_arguments['eval_interval']==0 and prop_type != 'reward':
-                mdp_reward_result, model_size = env.storm_bridge.model_checker.induced_markov_chain(project.agent, env, project.command_line_arguments['constant_definitions'], project.command_line_arguments['prop'])
+                mdp_reward_result, model_size = env.storm_bridge.model_checker.induced_markov_chain(project.agent, project.preprocessor, env, project.command_line_arguments['constant_definitions'], project.command_line_arguments['prop'])
                 all_property_results.append(mdp_reward_result)
 
                 if (all_property_results[-1] == min(all_property_results) and prop_type == "min_prop") or (all_property_results[-1] == max(all_property_results) and prop_type == "max_prop"):

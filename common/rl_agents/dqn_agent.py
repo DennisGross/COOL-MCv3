@@ -7,11 +7,10 @@ import torch.nn as nn
 import torch.nn.functional as F
 import torch.optim as optim
 from common.rl_agents.agent import Agent
+from common.utilities.helper import *
 from collections import OrderedDict
 import torch
 import numpy as np
-from common.utilities.helper import *
-
 
 
 
@@ -117,14 +116,23 @@ class DeepQNetwork(nn.Module):
         Returns:
             int: Action Index
         """
-        state = torch.tensor(state).float().to(DEVICE)
-        x = state
-        for i in range(len(self.layers)):
-            if i == (len(self.layers)-1):
-                x = self.layers[i](x)
-            else:
-                x = F.relu(self.layers[i](x))
-        return x
+        try:
+            x = state
+            for i in range(len(self.layers)):
+                if i == (len(self.layers)-1):
+                    x = self.layers[i](x)
+                else:
+                    x = F.relu(self.layers[i](x))
+            return x
+        except:
+            state = torch.tensor(state).float().to(DEVICE)
+            x = state
+            for i in range(len(self.layers)):
+                if i == (len(self.layers)-1):
+                    x = self.layers[i](x)
+                else:
+                    x = F.relu(self.layers[i](x))
+            return x
 
     def save_checkpoint(self, file_name : str):
         """Save model.

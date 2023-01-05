@@ -23,8 +23,7 @@ class StormBridge:
     """
 
     def __init__(self, path: str, constant_definitions: str, wrong_action_penalty: int,
-                 reward_flag: bool, disabled_features: str, permissive_input: str,
-                 abstraction_input: str, seed: int):
+                 reward_flag: bool, disabled_features: str, seed: int):
         """
         Initialize the Storm Bridge.
 
@@ -36,9 +35,6 @@ class StormBridge:
                                     If False, enviornment works with penalty.
             disabled_features (str): Defines which features of the MDP should
                                         be invisible for the RL agent.
-            permissive_input (str): Defines the features and their domain
-                                        for the permissive policy checking.
-            abstraction_input (str): Defines the abstraction of features.
             seed (int): Seed for the simulator.
         """
         assert isinstance(path, str)
@@ -46,8 +42,6 @@ class StormBridge:
         assert isinstance(wrong_action_penalty, int)
         assert isinstance(reward_flag, bool)
         assert isinstance(disabled_features, str)
-        assert isinstance(permissive_input, str)
-        assert isinstance(abstraction_input, str)
         assert isinstance(seed, int)
         self.seed = seed
         self.disabled_features = disabled_features
@@ -63,8 +57,7 @@ class StormBridge:
         json_path = os.path.splitext(self.path)[0]+'.json'
         self.state_mapper = StateMapper(
             json_path, self.state_json_example, self.disabled_features)
-        self.model_checker = ModelChecker(
-            permissive_input, self.state_mapper, abstraction_input)
+        self.model_checker = ModelChecker(self.state_mapper)
 
     def __preprocess_state_json_example(self, json_example: JsonContainerDouble) -> str:
         """Preprocess the state by casting boolean values to int values.
@@ -144,12 +137,12 @@ class StormBridge:
         if action_name not in current_available_actions:
             action_name = current_available_actions[0]
             penalty = -self.wrong_action_penalty
-        
+
 
         data = self.simulator.step(action_name)
         self._state = str(data[0])
         self.reward = data[1]
-        
+
 
         self._state = self.parse_state(self._state)
         self.reward = self.reward[0]

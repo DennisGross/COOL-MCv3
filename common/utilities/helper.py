@@ -28,9 +28,9 @@ def get_arguments() -> Dict[str, Any]:
     arg_parser.add_argument('--prism_dir', help='In which folder should we look for the PRISM environment?', type=str,
                             default='../prism_files')
     arg_parser.add_argument('--prism_file_path', help='Whats the name of the prism file?', type=str,
-                            default='')
+                            default='transporter.prism')
     arg_parser.add_argument('--constant_definitions', help='Constant definitions of the formal model (PRISM model)', type=str,
-                            default='')
+                            default='MAX_JOBS=2,MAX_FUEL=10')
     arg_parser.add_argument('--disabled_features', help='Features which should not be used by the RL agent: FEATURE1,FEATURE2,...', type=str,
                             default='')
     arg_parser.add_argument('--seed', help='Random Seed for numpy, random, storm, pytorch', type=int,
@@ -130,3 +130,19 @@ def set_random_seed(seed: int):
         torch.use_deterministic_algorithms(True)
         torch.backends.cudnn.deterministic = True
         torch.backends.cudnn.benchmark = False
+
+
+class LastRunManager:
+
+    @staticmethod
+    def write_last_run(project_name, run_id):
+        # Write last run to file
+        with open("last_run.txt", "w") as f:
+            f.write(project_name + "," + str(run_id))
+
+    @staticmethod
+    def read_last_run():
+        # Read last run from file
+        with open("last_run.txt", "r") as f:
+            project_name, run_id = f.read().split(",")
+            return project_name, int(run_id)

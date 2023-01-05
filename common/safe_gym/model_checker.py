@@ -18,20 +18,14 @@ class ModelChecker():
     the policy based on a property query.
     """
 
-    def __init__(self, permissive_input: str, mapper: StateMapper, abstraction_input: str):
+    def __init__(self, mapper: StateMapper):
         """Initialization
 
         Args:
-            permissive_input (str): Permissive input for permissive model checking
             mapper (StateMapper): State Variable mapper
-            abstraction_input (str): Abstraction input for state variable remapping
         """
-        assert isinstance(permissive_input, str)
         assert isinstance(mapper, StateMapper)
-        assert isinstance(abstraction_input, str)
-        self.wrong_choices = 0
-        #self.m_permissive_manager = PermissiveManager(permissive_input, mapper)
-        #self.m_abstraction_manager = AbstractionManager(mapper, abstraction_input)
+
 
     def __get_clean_state_dict(self, state_valuation_json: JsonContainerRational,
                                example_json: str) -> dict:
@@ -92,7 +86,7 @@ class ModelChecker():
         assert isinstance(action_name, str)
         return action_name
 
-    def induced_markov_chain(self, agent: common.rl_agents, env,
+    def induced_markov_chain(self, agent: common.rl_agents, preprocessor, env,
                              constant_definitions: str,
                              formula_str: str) -> Tuple[float, int]:
         """Creates a Markov chain of an MDP induced by a policy
@@ -110,9 +104,8 @@ class ModelChecker():
         assert str(agent.__class__).find("common.rl_agents") != -1
         assert isinstance(constant_definitions, str)
         assert isinstance(formula_str, str)
+        info = {}
         env.reset()
-        #self.m_permissive_manager.action_mapper = env.action_mapper
-        self.wrong_choices = 0
         start_time = time.time()
         prism_program = stormpy.parse_prism_program(env.storm_bridge.path)
         suggestions = dict()
@@ -149,13 +142,15 @@ class ModelChecker():
             assert isinstance(action_index, int)
             simulator.restart(state_valuation)
             available_actions = sorted(simulator.available_actions())
-            action_name = prism_program.get_action_name(action_index)
+            current_action_name = prism_program.get_action_name(action_index)
             # conditions on the action
             state = self.__get_clean_state_dict(
                 state_valuation.to_json(), env.storm_bridge.state_json_example)
             state = self.__get_numpy_state(env, state)
 
-
+            # Preprocess state
+            if preprocessor!=None:
+                state = preprocessor.preprocess(rl_agent, state, current_action_name, True)
 
             # Check if selected action is available..
             # if not set action to the first available action
@@ -163,14 +158,11 @@ class ModelChecker():
                 return False
 
             cond1 = False
-
             selected_action = self.__get_action_for_state(env, agent, state)
             if (selected_action in available_actions) is not True:
                 selected_action = available_actions[0]
-                #print(state, selected_action)
-            cond1 = (action_name == selected_action)
 
-            # print(str(state_valuation.to_json()), action_name)#, state, selected_action, cond1)
+            cond1 = (current_action_name == selected_action)
             assert isinstance(cond1, bool)
             return cond1
 
@@ -184,23 +176,21 @@ class ModelChecker():
                                                             incremental_building))
         model = constructor.build()
         model_size = len(model.states)
-        print("Model Building Time:", time.time()-model_building_start)
-        print("Model Size:", model.nr_states)
-        print("Transitions", model.nr_transitions)
-        # print(model)
-        # print(formula_str)
+
         model_checking_start_time = time.time()
-        print("Parse Properties...")
+
         properties = stormpy.parse_properties(formula_str, prism_program)
-        print("Model Cheking...")
+
         result = stormpy.model_checking(model, properties[0])
-        print("Model Checking Time:", time.time()-model_checking_start_time)
+
+        model_checking_time = time.time() - model_checking_start_time
 
         #stormpy.export_to_drn(model,"test.drn")
         initial_state = model.initial_states[0]
         #print('Result for initial state', result.at(initial_state))
-        mdp_reward_result = result.at(initial_state)
+        mdp_result = result.at(initial_state)
+
+        info = {"model_building_time": (time.time()-start_time), "model_checking_time": model_checking_time, "model_size": model_size}
         # Update StateActionCollector
-        assert isinstance(mdp_reward_result, float)
-        assert isinstance(model_size, int)
-        return mdp_reward_result, model_size
+        assert isinstance(mdp_result, float)
+        return mdp_result, info
