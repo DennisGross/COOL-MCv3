@@ -137,12 +137,12 @@ class LastRunManager:
     @staticmethod
     def write_last_run(project_name, run_id):
         # Write last run to file
-        with open("last_run.txt", "w") as f:
+        with open("../last_run.txt", "w") as f:
             f.write(project_name + "," + str(run_id))
 
     @staticmethod
     def read_last_run():
         # Read last run from file
-        with open("last_run.txt", "r") as f:
+        with open("../last_run.txt", "r") as f:
             project_name, run_id = f.read().split(",")
             return project_name, int(run_id)

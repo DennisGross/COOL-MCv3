@@ -42,7 +42,6 @@ def train(project, env, prop_type=''):
                     project.agent.step_learn()
                 state = next_state
                 episode_reward+=reward
-
             # Log rewards
             all_episode_rewards.append(episode_reward)
             project.mlflow_bridge.log_reward(all_episode_rewards[-1], episode)

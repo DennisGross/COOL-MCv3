@@ -88,7 +88,6 @@ class DeepQNetwork(nn.Module):
         """
         super(DeepQNetwork, self).__init__()
 
-
         layers = OrderedDict()
         previous_neurons = state_dimension
         for i in range(len(number_of_neurons)+1):
