@@ -1,9 +1,0 @@
-{
-	"CreatedAt": "2023-01-04T12:15:23+01:00",
-	"Driver": "local",
-	"Labels": null,
-	"Mountpoint": "/var/lib/docker/volumes/coolmc/_data",
-	"Name": "coolmc",
-	"Options": null,
-	"Scope": "local"
-}
