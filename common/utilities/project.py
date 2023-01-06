@@ -38,12 +38,11 @@ class Project():
                 pass
             if self.command_line_arguments['preprocessor'] != '':
                 # Only delete it if it is not set by the command line (in this case take new one)
+                # If "None", later during building none will be created
                 try:
                     del saved_command_line_arguments['preprocessor']
                 except:
                     pass
-            else:
-                print("USE old preprocessor: " + saved_command_line_arguments['preprocessor'])
             try:
                 del saved_command_line_arguments['epsilon']
             except:
@@ -76,10 +75,13 @@ class Project():
                 del saved_command_line_arguments['prop_type']
             except:
                 pass
-            try:
-                del saved_command_line_arguments['manipulator']
-            except:
-                pass
+            if self.command_line_arguments['manipulator'] != '':
+                # Only delete it if it is not set by the command line (in this case take new one)
+                # If "None", later during building none will be created
+                try:
+                    del saved_command_line_arguments['manipulator']
+                except:
+                    pass
             try:
                 del saved_command_line_arguments['range_plotting']
             except:

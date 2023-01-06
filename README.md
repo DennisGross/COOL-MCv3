@@ -52,8 +52,8 @@ Our tool also supports probabilistic policies by always choosing the action with
 A preprocessor is a tool that is used to modify the states that an RL agent receives before they are passed to the agent for learning. There are several types of preprocessors that can be used, depending on the user's preferences and goals. These include normal preprocessors, which are designed to improve the learning process; adversarial preprocessors, which are used to perform adversarial training or attacks; and defensive preprocessors, which are used to evaluate defense methods.
 
 To use an existing preprocessor, you can use the preprocessor command-line argument `preprocessor`. For example, the following command would divide each state feature by 10 before it is observed by the RL agent: `--preprocessor="normalizer,10"`.
-Note, that preprocessors get loaded automatically into the child runs. Use --preprocessor="None"` to remove the preprocessor in the child run.
-Use --preprocessor="normalizer,12"`, to use another preprocessor in the child run.
+Note, that preprocessors get loaded automatically into the child runs. Use `--preprocessor="None"` to remove the preprocessor in the child run.
+Use `--preprocessor="normalizer,12"`, to use another preprocessor in the child run.
 For more information about how to use preprocessors, you can refer to the examples and to the preprocessors package.
 
 1. If you want to create your own custom preprocessor, you can follow these steps:
@@ -75,6 +75,20 @@ Another method is to manipulate the observations that the RL agent receives duri
 The **manipulator** allows the simulation of poissioning attacks during training.
 It manipulates the replay buffers of the RL agents.
 With the tight integration between RL and model checking, it is possible to analyze the effetivness of poissoning attacks.
+
+To use an existing manipulator, you can use the manipulator command-line argument `manipulator`. For example, the following command would randomly change the value if the next state is a terminal state and stores the change value into the RL agent experience: `--manipulator="random_done"`.
+Note, that manipulators get loaded automatically into the child runs. Use `--manipulator="None"` to remove the preprocessor in the child run.
+Use `--manipulator="OTHERMANIPULATOR"`, to use another manipulator in the child run.
+For more information about how to use manipulators, you can refer to the examples and to the manipulators package.
+
+1. If you want to create your own custom manipulator, you can follow these steps:
+2. Create a new Python script called MANIPULATORNAME.py in the manipulators package, and define a new class called MANIPULATORNAME inside it.
+3. Inherit the manipulator class from the manipulator.py script. This will give your custom manipulator all of the necessary methods and attributes of a manipulator.
+4. Override any methods that you want to customize in your custom manipulator.
+5. Import the MANIPULATORNAME.py script into the manipulator builder script, which is responsible for building and configuring the manipulator for your RL agent.
+6. Add the new MANIPULATORNAME to the build_manipulator function, which is responsible for constructing the manipulator object. You will need to pass any necessary arguments to the constructor of your MANIPULATORNAME class when building the manipulator.
+
+It is important to make sure that your custom manipulator is compatible with the rest of the RL agent's code, and that it performs the manipulating tasks that you expect it to. You may need to test your custom manipulator to ensure that it is working correctly.
 
 ### Model Checking
 The callback function is used to incrementally build the induced DTMC, which is then passed to the model checker Storm. The callback function is called for every available action at every reachable state by the policy. It first gets the available actions at the current state. Second, it preprocesses the state and then queries the RL policy for an action. If the chosen action is not available, the callback function chooses the first action in the available action list. The callback function then checks if the chosen action was also the trigger for the current callback function and builds the induced DTMC from there if it was.
