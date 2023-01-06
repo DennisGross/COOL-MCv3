@@ -1,4 +1,5 @@
 from common.rl_agents.agent_builder import AgentBuilder
+from common.preprocessors.preprocessor_builder import PreprocessorBuilder
 from common.utilities.mlflow_bridge import MlFlowBridge
 
 class Project():
@@ -34,10 +35,14 @@ class Project():
                 del saved_command_line_arguments['constant_definitions']
             except:
                 pass
-            try:
-                del saved_command_line_arguments['preprocessor']
-            except:
-                pass
+            if self.command_line_arguments['preprocessor'] != '':
+                # Only delete it if it is not set by the command line (in this case take new one)
+                try:
+                    del saved_command_line_arguments['preprocessor']
+                except:
+                    pass
+            else:
+                print("USE old preprocessor: " + saved_command_line_arguments['preprocessor'])
             try:
                 del saved_command_line_arguments['epsilon']
             except:
@@ -83,6 +88,7 @@ class Project():
                 self.command_line_arguments[key] = saved_command_line_arguments[key]
 
 
+
     def create_agent(self, command_line_arguments, observation_space, number_of_actions):
         agent = None
         try:
@@ -95,8 +101,19 @@ class Project():
         self.agent = agent
         return self.agent
 
-    def create_preprocessor(self):
-        pass
+    def create_preprocessor(self, command_line_arguments, observation_space, number_of_actions, state_mapper):
+        processor = None
+        try:
+            preprocessor_path = self.mlflow_bridge.get_agent_path().replace("model", "")
+            print(model_folder_path)
+            # Build agent with the model and the hyperparameters
+            processor = PreprocessorBuilder.build_preprocessor(preprocessor_path, command_line_arguments, observation_space, number_of_actions, state_mapper)
+        except Exception as msg:
+            # If Model was not saved
+            preprocessor = PreprocessorBuilder.build_preprocessor(None, command_line_arguments, observation_space, number_of_actions, state_mapper)
+        self.preprocessor = preprocessor
+        return self.preprocessor
+
 
     def create_manipulator(self):
         pass
@@ -105,6 +122,12 @@ class Project():
     def save(self):
         # Agent
         self.agent.save()
+        # Preprocessor
+        if self.preprocessor != None:
+            self.preprocessor.save()
+        # Manipulator
+        if self.manipulator != None:
+            self.manipulator.save()
         # Save Command Line Arguments
         self.mlflow_bridge.save_command_line_arguments(self.command_line_arguments)
 

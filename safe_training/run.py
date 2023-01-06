@@ -21,6 +21,9 @@ if __name__ == '__main__':
     prism_file_path = os.path.join(
         command_line_arguments['prism_dir'], command_line_arguments['prism_file_path'])
 
+    if command_line_arguments['parent_run_id'] == "last":
+        command_line_arguments['project_name'], command_line_arguments['parent_run_id'] = LastRunManager.read_last_run()
+        print("Loaded last run: ", command_line_arguments['project_name'], command_line_arguments['parent_run_id'])
     # Environment
     env = SafeGym(prism_file_path, command_line_arguments['constant_definitions'],
                 command_line_arguments['max_steps'], command_line_arguments['wrong_action_penalty'],
@@ -34,10 +37,10 @@ if __name__ == '__main__':
         command_line_arguments['project_name'], command_line_arguments['task'],
         command_line_arguments['parent_run_id'])
     m_project.load_saved_command_line_arguments()
-    print(m_project.command_line_arguments)
+    #print(m_project.command_line_arguments)
     m_project.create_agent(command_line_arguments,
                            env.observation_space, env.action_space)
-    m_project.create_preprocessor()
+    m_project.create_preprocessor(command_line_arguments,env.observation_space, env.action_space, env.storm_bridge.state_mapper)
     m_project.create_manipulator()
     m_project.mlflow_bridge.set_property_query_as_run_name(
         command_line_arguments['prop'] + " for " + command_line_arguments['constant_definitions'])
@@ -45,5 +48,6 @@ if __name__ == '__main__':
     # Train
     train(m_project, env, prop_type=command_line_arguments['prop_type'])
     run_id = m_project.mlflow_bridge.get_run_id()
+    print("Run ID: " + run_id)
     LastRunManager.write_last_run(m_project.command_line_arguments['project_name'], run_id)
     m_project.close()

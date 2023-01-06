@@ -145,4 +145,4 @@ class LastRunManager:
         # Read last run from file
         with open("../last_run.txt", "r") as f:
             project_name, run_id = f.read().split(",")
-            return project_name, int(run_id)
+            return project_name, run_id

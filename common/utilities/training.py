@@ -30,6 +30,7 @@ def train(project, env, prop_type=''):
                 if project.preprocessor != None:
                     # Preprocessing
                     state = project.preprocessor.preprocess(project.agent, state, "", project.command_line_arguments['deploy'])
+                print(state)
                 action = project.agent.select_action(state, project.command_line_arguments['deploy'])
                 next_state, reward, done, info = env.step(action)
                 if next_state.__class__.__name__ == 'int':
@@ -57,6 +58,7 @@ def train(project, env, prop_type=''):
 
                 if (all_property_results[-1] == min(all_property_results) and prop_type == "min_prop") or (all_property_results[-1] == max(all_property_results) and prop_type == "max_prop"):
                     best_property_result = all_property_results[-1]
+                    project.mlflow_bridge.log_best_property(best_property_result, episode)
                     if project.command_line_arguments['deploy']==False:
                         project.save()
                 # Log Property result
@@ -65,6 +67,7 @@ def train(project, env, prop_type=''):
             # Update best sliding window value
             if reward_of_sliding_window  > best_reward_of_sliding_window and len(all_episode_rewards)>=project.command_line_arguments['sliding_window_size']:
                 best_reward_of_sliding_window = reward_of_sliding_window
+                project.mlflow_bridge.log_best_reward(best_reward_of_sliding_window, episode)
                 if prop_type=='reward' and project.command_line_arguments['deploy']==False:
                     project.save()
 
@@ -75,8 +78,7 @@ def train(project, env, prop_type=''):
         gc.collect()
     finally:
         torch.cuda.empty_cache()
-        # Log overall metrics
-        if project.command_line_arguments['deploy']==False:
-            project.mlflow_bridge.log_best_reward(best_reward_of_sliding_window)
+
+
 
     return best_reward_of_sliding_window, best_property_result

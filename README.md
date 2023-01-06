@@ -5,6 +5,9 @@
 
 Verify that everything works: `python run_tests.py`
 
+
+Start MLFlow server in the background: `mlflow server -h 0.0.0.0 &`
+
 ## Architecture
 We will first describe the main components of COOL-MC and then delve into the details.
 

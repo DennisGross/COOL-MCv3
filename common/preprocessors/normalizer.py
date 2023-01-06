@@ -1,17 +1,17 @@
+from common.preprocessors.preprocessor import Preprocessor
 import numpy as np
-class Preprocessor:
+class Normalizer(Preprocessor):
 
     def __init__(self, state_mapper, config_str):
-        self.state_mapper = state_mapper
-        self.config_str = config_str
-        self.buffer = {}
+        super().__init__(state_mapper, config_str)
+        self.denominator = self.parse_config(self.config_str)
 
     def parse_config(self, config_str:str) -> None:
         """
         Parse the configuration.
         :param config_str: The configuration.
         """
-        raise NotImplementedError()
+        return float(config_str.split(",")[1])
 
     def preprocess(self, rl_agent, state:np.ndarray, current_action_name:str, deploy:bool) -> np.ndarray:
         """
@@ -21,7 +21,7 @@ class Preprocessor:
         :param state: The state.
         :return: The preprocessed state.
         """
-        raise NotImplementedError()
+        return state / self.denominator
 
     def save(self):
         """
