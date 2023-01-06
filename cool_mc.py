@@ -12,3 +12,9 @@ if __name__ == '__main__':
             env_manager="local",
             parameters=dict(args)
         )
+    elif args['task'] == 'rl_model_checking':
+        mlflow.run(
+            "rl_model_checking",
+            env_manager="local",
+            parameters=dict(args)
+        )

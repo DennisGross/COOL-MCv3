@@ -8,6 +8,7 @@ import torch
 
 DEVICE = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
 SAFE_TRAINING_TASK = "safe_training"
+RL_MODEL_CHECKING_TASK = "rl_model_checking"
 
 def get_arguments() -> Dict[str, Any]:
     """Parses all the COOL-MC arguments

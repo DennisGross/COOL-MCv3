@@ -152,6 +152,7 @@ class ModelChecker():
             if preprocessor!=None:
                 state = preprocessor.preprocess(rl_agent, state, current_action_name, True)
 
+
             # Check if selected action is available..
             # if not set action to the first available action
             if len(available_actions) == 0:

@@ -52,7 +52,7 @@ def train(project, env, prop_type=''):
                 project.agent.episodic_learn()
 
             if episode % project.command_line_arguments['eval_interval']==0 and prop_type != 'reward':
-                mdp_reward_result, model_size = env.storm_bridge.model_checker.induced_markov_chain(project.agent, project.preprocessor, env, project.command_line_arguments['constant_definitions'], project.command_line_arguments['prop'])
+                mdp_reward_result, model_checking_info = env.storm_bridge.model_checker.induced_markov_chain(project.agent, project.preprocessor, env, project.command_line_arguments['constant_definitions'], project.command_line_arguments['prop'])
                 all_property_results.append(mdp_reward_result)
 
                 if (all_property_results[-1] == min(all_property_results) and prop_type == "min_prop") or (all_property_results[-1] == max(all_property_results) and prop_type == "max_prop"):
@@ -77,7 +77,5 @@ def train(project, env, prop_type=''):
         gc.collect()
     finally:
         torch.cuda.empty_cache()
-
-
 
     return best_reward_of_sliding_window, best_property_result

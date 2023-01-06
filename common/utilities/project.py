@@ -98,6 +98,7 @@ class Project():
             model_folder_path = self.mlflow_bridge.get_agent_path()
             # Build agent with the model and the hyperparameters
             agent = AgentBuilder.build_agent(model_folder_path, command_line_arguments, observation_space, number_of_actions)
+            print("Agent loaded from", model_folder_path)
         except Exception as msg:
             # If Model was not saved
             agent = AgentBuilder.build_agent(None, command_line_arguments, observation_space, number_of_actions)
@@ -105,30 +106,21 @@ class Project():
         return self.agent
 
     def create_preprocessor(self, command_line_arguments, observation_space, number_of_actions, state_mapper):
-        processor = None
-        try:
-            preprocessor_path = self.mlflow_bridge.get_agent_path().replace("model", "")
-            print(model_folder_path)
-            # Build agent with the model and the hyperparameters
-            processor = PreprocessorBuilder.build_preprocessor(preprocessor_path, command_line_arguments, observation_space, number_of_actions, state_mapper)
-        except Exception as msg:
-            # If Model was not saved
-            preprocessor = PreprocessorBuilder.build_preprocessor(None, command_line_arguments, observation_space, number_of_actions, state_mapper)
-        self.preprocessor = preprocessor
+        preprocessor_path = self.mlflow_bridge.get_agent_path().replace("model", "")
+        # Build agent with the model and the hyperparameters
+        self.preprocessor = PreprocessorBuilder.build_preprocessor(preprocessor_path, command_line_arguments, observation_space, number_of_actions, state_mapper)
+        if self.preprocessor != None:
+            print("Preprocssor", command_line_arguments['preprocessor'])
+            print("Preprocessor loaded from", preprocessor_path)
         return self.preprocessor
 
 
     def create_manipulator(self, command_line_arguments, observation_space, number_of_actions, state_mapper):
-        manipulator = None
-        try:
-            manipulator_path = self.mlflow_bridge.get_agent_path().replace("model", "")
-            print(model_folder_path)
-            # Build agent with the model and the hyperparameters
-            manipulator = ManipulatorBuilder.build_manipulator(manipulator_path, command_line_arguments, observation_space, number_of_actions, state_mapper)
-        except Exception as msg:
-            # If Model was not saved
-            manipulator = ManipulatorBuilder.build_manipulator(None, command_line_arguments, observation_space, number_of_actions, state_mapper)
-        self.manipulator = manipulator
+        manipulator_path = self.mlflow_bridge.get_agent_path().replace("model", "")
+        # Build agent with the model and the hyperparameters
+        self.manipulator = ManipulatorBuilder.build_manipulator(manipulator_path, command_line_arguments, observation_space, number_of_actions, state_mapper)
+        if self.manipulator != None:
+            print("Manipulator loaded from", manipulator_path)
         return self.manipulator
 
 

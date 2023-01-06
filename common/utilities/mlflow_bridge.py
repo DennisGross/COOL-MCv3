@@ -29,7 +29,7 @@ class MlFlowBridge:
     def create_new_run(self, task, run_id=None):
         if run_id == None or run_id == '':
             # Create new Run
-            print("Create new run.")
+            #print("Create new run.")
             self.run = self.client.create_run(self.experiment.experiment_id)
             self.client.set_tag(self.run.info.run_id, "task", task)
         else:
@@ -89,15 +89,15 @@ class MlFlowBridge:
         # Command Line Arguments
         mlflow.log_artifact("command_line_arguments.json", artifact_path="meta")
         os.remove('command_line_arguments.json')
-        print("Saved")
+        #print("Saved")
 
 
     def load_command_line_arguments(self):
         meta_folder_path = mlflow.get_artifact_uri(artifact_path="meta").replace('/file:/','')
         # If rerun, take all the command line arguments from previous run into account except the following:
-        print(meta_folder_path)
+        #print(meta_folder_path)
         command_line_arguments_file_path = os.path.join(meta_folder_path, 'command_line_arguments.json')[7:]
-        print(command_line_arguments_file_path)
+        #print(command_line_arguments_file_path)
         if os.path.exists(command_line_arguments_file_path):
             with open(command_line_arguments_file_path) as json_file:
                 command_line_arguments = json.load(json_file)
