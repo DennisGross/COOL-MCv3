@@ -5,7 +5,6 @@
 
 Verify that everything works: `python run_tests.py`
 
-
 Start MLFlow server in the background: `mlflow server -h 0.0.0.0 &`
 
 ## Architecture
@@ -42,11 +41,6 @@ else:
 
 To run the safe_training component via MLflow, execute `mlflow run safe_training --env-manager=local`
 
-#### Preprocessor
-The preprocessor is used to preprocess states before they get passed to the agent.
-Depending on the user preferences, it may consists of normal preprocessing (for better learning), adversarial preprocessing (for adversarial trainings/attacks), and defensive preprocessing (for evaluating defense methods).
-It is also used to disable certain state variables in cases where the state variables only needed to correctly model the environment in PRISM or to simulate partial observability (WITHOUT an belief function).
-
 
 #### RL Wrapper
 We wrap all RL agents into a RL wrapper. This RL wrapper handles the interaction with the environment.
@@ -54,8 +48,31 @@ Via our generic interface, we can model check any kind of memoryless policy.
 Our tool also supports probabilistic policies by always choosing the action with the highest probability in the probability distribution at each state and makes the policy therefore deterministic.
 
 
-#### Manipulator
-The manipulator allows the simulation of poissioning attacks during training.
+#### Preprocessor
+A preprocessor is a tool that is used to modify the states that an RL agent receives before they are passed to the agent for learning. There are several types of preprocessors that can be used, depending on the user's preferences and goals. These include normal preprocessors, which are designed to improve the learning process; adversarial preprocessors, which are used to perform adversarial training or attacks; and defensive preprocessors, which are used to evaluate defense methods.
+
+To use an existing preprocessor, you can use the preprocessor command-line argument `preprocessor`. For example, the following command would divide each state feature by 10 before it is observed by the RL agent: `--preprocessor="normalizer,10"`.
+Note, that preprocessors get loaded automatically into the child runs. Use --preprocessor="None"` to remove the preprocessor in the child run.
+Use --preprocessor="normalizer,12"`, to use another preprocessor in the child run.
+For more information about how to use preprocessors, you can refer to the examples and to the preprocessors package.
+
+1. If you want to create your own custom preprocessor, you can follow these steps:
+2. Create a new Python script called PREPROCESSORNAME.py in the preprocessors package, and define a new class called PREPROCESSORNAME inside it.
+3. Inherit the preprocessor class from the preprocessor.py script. This will give your custom preprocessor all of the necessary methods and attributes of a preprocessor.
+4. Override any methods that you want to customize in your custom preprocessor.
+5. Import the PREPROCESSORNAME.py script into the preprocessor builder script, which is responsible for building and configuring the preprocessor for your RL agent.
+6. Add the new PREPROCESSORNAME to the build_preprocessor function, which is responsible for constructing the preprocessor object. You will need to pass any necessary arguments to the constructor of your PREPROCESSORNAME class when building the preprocessor.
+
+It is important to make sure that your custom preprocessor is compatible with the rest of the RL agent's code, and that it performs the preprocessing tasks that you expect it to. You may need to test your custom preprocessor to ensure that it is working correctly.
+
+
+
+### Manipulator
+Poisoning attacks in reinforcement learning (RL) are a type of adversarial attack that can be used to manipulate the training process of an RL agent. In a poisoning attack, the attacker injects malicious data into the training process in order to cause the RL agent to learn a suboptimal or malicious policy.
+There are several ways in which poisoning attacks can be carried out in RL. One common method is to manipulate the rewards that the RL agent receives during training. For example, the attacker could artificially inflate the rewards for certain actions, causing the RL agent to prioritize those actions and learn a suboptimal policy.
+Another method is to manipulate the observations that the RL agent receives during training. For example, the attacker could alter the sensory input to the RL agent in order to mislead it about the state of the environment. This can cause the RL agent to learn a policy that is suboptimal or even harmful.
+
+The **manipulator** allows the simulation of poissioning attacks during training.
 It manipulates the replay buffers of the RL agents.
 With the tight integration between RL and model checking, it is possible to analyze the effetivness of poissoning attacks.
 
@@ -77,5 +94,3 @@ def callback_function(state_valuation, action_index):
 
 constructor = stormpy.make_sparse_model_builder(prism_program, options,stormpy.StateValuationFunctionActionMaskDouble(callback_function))
 ```
-
-

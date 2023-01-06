@@ -37,11 +37,12 @@ if __name__ == '__main__':
         command_line_arguments['project_name'], command_line_arguments['task'],
         command_line_arguments['parent_run_id'])
     m_project.load_saved_command_line_arguments()
+
     #print(m_project.command_line_arguments)
     m_project.create_agent(command_line_arguments,
                            env.observation_space, env.action_space)
-    m_project.create_preprocessor(command_line_arguments,env.observation_space, env.action_space, env.storm_bridge.state_mapper)
-    m_project.create_manipulator()
+    m_project.create_preprocessor(command_line_arguments, env.observation_space, env.action_space, env.storm_bridge.state_mapper)
+    m_project.create_manipulator(command_line_arguments, env.observation_space, env.action_space, env.storm_bridge.state_mapper)
     m_project.mlflow_bridge.set_property_query_as_run_name(
         command_line_arguments['prop'] + " for " + command_line_arguments['constant_definitions'])
 

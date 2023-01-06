@@ -1,1 +1,1 @@
-taxi_examples,c123378d456b4cce96e6849d024fc9cf
+taxi_examples,abf4c721d2cb4f56b5db850d93b4594d

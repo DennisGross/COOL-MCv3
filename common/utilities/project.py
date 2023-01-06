@@ -1,5 +1,6 @@
 from common.rl_agents.agent_builder import AgentBuilder
 from common.preprocessors.preprocessor_builder import PreprocessorBuilder
+from common.manipulators.manipulator_builder import ManipulatorBuilder
 from common.utilities.mlflow_bridge import MlFlowBridge
 
 class Project():
@@ -115,8 +116,18 @@ class Project():
         return self.preprocessor
 
 
-    def create_manipulator(self):
-        pass
+    def create_manipulator(self, command_line_arguments, observation_space, number_of_actions, state_mapper):
+        manipulator = None
+        try:
+            manipulator_path = self.mlflow_bridge.get_agent_path().replace("model", "")
+            print(model_folder_path)
+            # Build agent with the model and the hyperparameters
+            manipulator = ManipulatorBuilder.build_manipulator(manipulator_path, command_line_arguments, observation_space, number_of_actions, state_mapper)
+        except Exception as msg:
+            # If Model was not saved
+            manipulator = ManipulatorBuilder.build_manipulator(None, command_line_arguments, observation_space, number_of_actions, state_mapper)
+        self.manipulator = manipulator
+        return self.manipulator
 
 
     def save(self):
