@@ -29,11 +29,12 @@ class MlFlowBridge:
     def create_new_run(self, task, run_id=None):
         if run_id == None or run_id == '':
             # Create new Run
-            #print("Create new run.")
+            print("Create new run.")
             self.run = self.client.create_run(self.experiment.experiment_id)
             self.client.set_tag(self.run.info.run_id, "task", task)
         else:
             # Choose already existing run
+            print("Choose existing run: " + run_id)
             run = mlflow.get_run(run_id)
             self.run = self.__copy_run(self.experiment, run)
 
@@ -49,6 +50,7 @@ class MlFlowBridge:
         new_run_id = ''.join(random.choices(string.ascii_lowercase + string.digits, k=len(run.info.run_id)+10))
         run_path = os.path.join('../mlruns', experiment.experiment_id, run.info.run_id)
         new_run_path = os.path.join('../mlruns', experiment.experiment_id, new_run_id)
+        # print working directory
         while exists:
             new_run_id = ''.join(random.choices(string.ascii_lowercase + string.digits, k=len(run.info.run_id)+10))
             new_run_path = os.path.join('../mlruns', experiment.experiment_id, new_run_id)
@@ -59,6 +61,7 @@ class MlFlowBridge:
         lines = f.readlines()
         f.close()
         lines[0] = lines[0].replace(run.info.run_id, new_run_id)
+        lines[5] = lines[5].replace(run.info.run_id, new_run_id)
         lines[6] = lines[6].replace(run.info.run_id, new_run_id)
         lines[7] = lines[7].replace(run.info.run_id, new_run_id)
         lines[7] = lines[7].replace(run.info.run_id, new_run_id)
@@ -129,6 +132,9 @@ class MlFlowBridge:
 
     def log_best_property_result(self, best_property_result, episode):
         mlflow.log_metric(key='best_property_result', value=best_property_result, step= episode)
+
+    def log_best_property(self, best_property_result):
+        mlflow.log_param("best_property_result", best_property_result)
 
 
     def log_accuracy(self, acc):

@@ -126,7 +126,8 @@ class Project():
 
     def save(self):
         # Agent
-        self.agent.save()
+        if self.agent != None:
+            self.agent.save()
         # Preprocessor
         if self.preprocessor != None:
             self.preprocessor.save()
