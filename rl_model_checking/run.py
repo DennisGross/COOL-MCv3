@@ -40,12 +40,12 @@ if __name__ == '__main__':
 
     # Project
     m_project = Project(command_line_arguments)
-    print(m_project.command_line_arguments)
     m_project.init_mlflow_bridge(
         command_line_arguments['project_name'], command_line_arguments['task'],
         command_line_arguments['parent_run_id'])
     m_project.load_saved_command_line_arguments()
-    #m_project.save()
+    print("We use the following command line arguments:")
+    print(m_project.command_line_arguments)
 
     # Project Environment
     prism_file_path = os.path.join(

@@ -29,12 +29,10 @@ class MlFlowBridge:
     def create_new_run(self, task, run_id=None):
         if run_id == None or run_id == '':
             # Create new Run
-            print("Create new run.")
             self.run = self.client.create_run(self.experiment.experiment_id)
             self.client.set_tag(self.run.info.run_id, "task", task)
         else:
             # Choose already existing run
-            print("Choose existing run: " + run_id)
             run = mlflow.get_run(run_id)
             self.run = self.__copy_run(self.experiment, run)
 
