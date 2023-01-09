@@ -58,7 +58,8 @@ if __name__ == '__main__':
 
     # Create rest of project
     m_project.create_agent(m_project.command_line_arguments,
-                           env.observation_space, env.action_space)
+                           env.observation_space, env.action_space, env.action_mapper.actions)
+    m_project.agent.load_env(env)
     m_project.create_preprocessor(m_project.command_line_arguments, env.observation_space, env.action_space, env.storm_bridge.state_mapper)
     m_project.create_manipulator(m_project.command_line_arguments, env.observation_space, env.action_space, env.storm_bridge.state_mapper)
 

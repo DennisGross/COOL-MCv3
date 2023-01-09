@@ -15,10 +15,13 @@ import gc
 def train(project, env, prop_type=''):
     all_episode_rewards = deque(maxlen=project.command_line_arguments['sliding_window_size'])
     all_property_results = deque(maxlen=project.command_line_arguments['sliding_window_size'])
-    best_reward_of_sliding_window = -math.inf
-    best_property_result = -math.inf
+    best_reward_of_sliding_window = project.mlflow_bridge.get_best_reward(project.command_line_arguments)
+    best_property_result = project.mlflow_bridge.get_best_property_result(project.command_line_arguments)
     mdp_reward_result = None
 
+
+
+    project.agent.load_env(env)
     try:
         for episode in range(project.command_line_arguments['num_episodes']):
             state = env.reset()
@@ -57,9 +60,12 @@ def train(project, env, prop_type=''):
 
                 if (all_property_results[-1] == min(all_property_results) and prop_type == "min_prop") or (all_property_results[-1] == max(all_property_results) and prop_type == "max_prop"):
                     best_property_result = all_property_results[-1]
-                    project.mlflow_bridge.log_best_property(best_property_result, episode)
+                    project.mlflow_bridge.log_best_property_result(best_property_result, episode)
                     if project.command_line_arguments['deploy']==False:
                         project.save()
+                    if best_property_result == 1:
+                        print("Property satisfied!")
+                        break
                 # Log Property result
                 project.mlflow_bridge.log_property(all_property_results[-1], 'Property Result', episode)
 

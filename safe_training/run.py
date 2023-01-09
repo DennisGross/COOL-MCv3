@@ -40,7 +40,7 @@ if __name__ == '__main__':
 
     #print(m_project.command_line_arguments)
     m_project.create_agent(command_line_arguments,
-                           env.observation_space, env.action_space)
+                           env.observation_space, env.action_space, env.action_mapper.actions)
     m_project.create_preprocessor(command_line_arguments, env.observation_space, env.action_space, env.storm_bridge.state_mapper)
     m_project.create_manipulator(command_line_arguments, env.observation_space, env.action_space, env.storm_bridge.state_mapper)
     m_project.mlflow_bridge.set_property_query_as_run_name(

@@ -63,6 +63,12 @@ class Agent():
         """
         pass
 
+    def load_env(self, env):
+        """
+        Further loading, when the environment is loaded.
+        """
+        pass
+
 def to_tuple(number_of_elements : int, values : int):
     '''
     Creates a tuple with

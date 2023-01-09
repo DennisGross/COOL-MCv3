@@ -31,7 +31,7 @@ def get_arguments() -> Dict[str, Any]:
     arg_parser.add_argument('--prism_file_path', help='Whats the name of the prism file?', type=str,
                             default='transporter.prism')
     arg_parser.add_argument('--constant_definitions', help='Constant definitions of the formal model (PRISM model)', type=str,
-                            default='MAX_JOBS=2,MAX_FUEL=10')
+                            default='')
     arg_parser.add_argument('--disabled_features', help='Features which should not be used by the RL agent: FEATURE1,FEATURE2,...', type=str,
                             default='')
     arg_parser.add_argument('--seed', help='Random Seed for numpy, random, storm, pytorch', type=int,

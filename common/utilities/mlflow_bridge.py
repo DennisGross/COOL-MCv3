@@ -7,6 +7,7 @@ import mlflow
 import time
 from mlflow.tracking import MlflowClient
 from distutils.dir_util import copy_tree
+import math
 
 
 class MlFlowBridge:
@@ -19,10 +20,10 @@ class MlFlowBridge:
         self.client = MlflowClient()
         #mlflow.set_tracking_uri(self.project_dir)
         try:
-            experiment_id = self.client.create_experiment(self.experiment_name)
+            self.experiment_id = self.client.create_experiment(self.experiment_name)
         except:
-            experiment_id = self.client.get_experiment_by_name(self.experiment_name).experiment_id
-        self.experiment = self.client.get_experiment(experiment_id)
+            self.experiment_id = self.client.get_experiment_by_name(self.experiment_name).experiment_id
+        self.experiment = self.client.get_experiment(self.experiment_id)
         self.create_new_run(self.task, self.parent_run_id)
 
 
@@ -133,6 +134,38 @@ class MlFlowBridge:
 
     def log_best_property(self, best_property_result):
         mlflow.log_param("best_property_result", best_property_result)
+
+    def get_best_reward(self,command_line_arguments):
+        run_path = self.get_agent_path().replace("/artifacts/model","")
+        best_reward = -math.inf
+        p = os.path.join("/workspaces/coolmc/",run_path, 'metrics','best_sliding_window_reward').strip()
+        path_parts = p.split("/")
+        path_parts[5] = command_line_arguments['parent_run_id']
+        p = "/".join(path_parts)
+        if not os.path.exists(p):
+            return best_reward
+        with open(p) as f:
+            lines = f.readlines()
+            best_reward = float(lines[-1].split(' ')[-2])
+
+        print("Best Reward: ", best_reward)
+        return best_reward
+
+    def get_best_property_result(self,command_line_arguments):
+        run_path = self.get_agent_path().replace("/artifacts/model","")
+        best_property_result = -math.inf
+        p = os.path.join("/workspaces/coolmc/",run_path, 'metrics','best_property_result').strip()
+        path_parts = p.split("/")
+        path_parts[5] = command_line_arguments['parent_run_id']
+        p = "/".join(path_parts)
+        if not os.path.exists(p):
+            return best_property_result
+        with open(p) as f:
+            lines = f.readlines()
+            best_property_result = float(lines[-1].split(' ')[-2])
+
+        print("Best best_property_result: ", best_property_result)
+        return best_property_result
 
 
     def log_accuracy(self, acc):
