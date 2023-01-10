@@ -48,7 +48,7 @@ class ConstantDefinitionParser():
             str: range state constant name
         """
         assert isinstance(state_constant_assignment, str)
-        parts = state_constant_assignment.split(',')
+        parts = state_constant_assignment.split(';')
         for part in parts:
             if part.count('[') == 1:
                 sub_parts = part.split('=')

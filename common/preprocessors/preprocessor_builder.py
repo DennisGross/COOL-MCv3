@@ -1,5 +1,8 @@
 import os
 from common.preprocessors.normalizer import *
+from common.preprocessors.single_agent_fgsm import *
+from common.preprocessors.feature_remapping import *
+from common.preprocessors.policy_abstraction import *
 '''
 HOW TO ADD MORE AGENTS?
 1) Create a new AGENTNAME.py with an AGENTNAME class
@@ -21,9 +24,17 @@ class PreprocessorBuilder():
         except:
             state_dimension = 1
         preprocessor = None
-        preprocessor_name = command_line_arguments['preprocessor'].split(",")[0]
+        preprocessor_name = command_line_arguments['preprocessor'].split(";")[0]
         if preprocessor_name == "normalizer":
             preprocessor = Normalizer(state_mapper, command_line_arguments['preprocessor'])
             preprocessor.load(preprocessor_path)
-
+        elif preprocessor_name == "fgsm":
+            preprocessor = FGSM(state_mapper, command_line_arguments['preprocessor'])
+            preprocessor.load(preprocessor_path)
+        elif preprocessor_name == "feature_remapping":
+            preprocessor = FeatureRemapper(state_mapper, command_line_arguments['preprocessor'])
+            preprocessor.load(preprocessor_path)
+        elif preprocessor_name == "policy_abstraction":
+            preprocessor = PolicyAbstraction(state_mapper, command_line_arguments['preprocessor'])
+            preprocessor.load(preprocessor_path)
         return preprocessor

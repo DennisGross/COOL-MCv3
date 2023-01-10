@@ -1,4 +1,4 @@
-class Manipulator:
+class Postprocessor:
 
     def __init__(self, state_mapper, config):
         self.state_mapper = state_mapper

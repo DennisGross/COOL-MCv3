@@ -1,6 +1,7 @@
-from common.manipulators.manipulator import Manipulator
+from common.postprocessors.postprocessor import Postprocessor
 import numpy as np
-class RandomDone(Manipulator):
+
+class RandomDone(Postprocessor):
 
     def __init__(self, state_mapper, config):
         super().__init__(state_mapper, config)

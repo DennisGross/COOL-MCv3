@@ -1,6 +1,6 @@
 from common.rl_agents.agent_builder import AgentBuilder
 from common.preprocessors.preprocessor_builder import PreprocessorBuilder
-from common.manipulators.manipulator_builder import ManipulatorBuilder
+from common.postprocessors.postprocessor_builder import PostprocessorBuilder
 from common.utilities.mlflow_bridge import MlFlowBridge
 
 class Project():
@@ -75,11 +75,11 @@ class Project():
                 del saved_command_line_arguments['prop_type']
             except:
                 pass
-            if self.command_line_arguments['manipulator'] != '':
+            if self.command_line_arguments['postprocessor'] != '':
                 # Only delete it if it is not set by the command line (in this case take new one)
                 # If "None", later during building none will be created
                 try:
-                    del saved_command_line_arguments['manipulator']
+                    del saved_command_line_arguments['postprocessor']
                 except:
                     pass
             try:
@@ -115,13 +115,13 @@ class Project():
         return self.preprocessor
 
 
-    def create_manipulator(self, command_line_arguments, observation_space, number_of_actions, state_mapper):
-        manipulator_path = self.mlflow_bridge.get_agent_path().replace("model", "")
+    def create_postprocessor(self, command_line_arguments, observation_space, number_of_actions, state_mapper):
+        postprocessor_path = self.mlflow_bridge.get_agent_path().replace("model", "")
         # Build agent with the model and the hyperparameters
-        self.manipulator = ManipulatorBuilder.build_manipulator(manipulator_path, command_line_arguments, observation_space, number_of_actions, state_mapper)
-        if self.manipulator != None:
-            print("Manipulator loaded from", manipulator_path)
-        return self.manipulator
+        self.postprocessor = PostprocessorBuilder.build_postprocessor(postprocessor_path, command_line_arguments, observation_space, number_of_actions, state_mapper)
+        if self.postprocessor != None:
+            print("Manipulator loaded from", postprocessor_path)
+        return self.postprocessor
 
 
     def save(self):

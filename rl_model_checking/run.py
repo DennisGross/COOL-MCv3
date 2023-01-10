@@ -61,7 +61,7 @@ if __name__ == '__main__':
                            env.observation_space, env.action_space, env.action_mapper.actions)
     m_project.agent.load_env(env)
     m_project.create_preprocessor(m_project.command_line_arguments, env.observation_space, env.action_space, env.storm_bridge.state_mapper)
-    m_project.create_manipulator(m_project.command_line_arguments, env.observation_space, env.action_space, env.storm_bridge.state_mapper)
+    m_project.create_postprocessor(m_project.command_line_arguments, env.observation_space, env.action_space, env.storm_bridge.state_mapper)
 
     # Prepare property
     m_project.command_line_arguments['prop'], prepared, original_prop = prepare_prop(m_project.command_line_arguments['prop'])

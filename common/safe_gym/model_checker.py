@@ -150,7 +150,7 @@ class ModelChecker():
 
             # Preprocess state
             if preprocessor!=None:
-                state = preprocessor.preprocess(rl_agent, state, current_action_name, True)
+                state = preprocessor.preprocess(agent, state, env.action_mapper, current_action_name, True)
 
 
             # Check if selected action is available..

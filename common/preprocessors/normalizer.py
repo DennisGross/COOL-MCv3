@@ -11,9 +11,9 @@ class Normalizer(Preprocessor):
         Parse the configuration.
         :param config_str: The configuration.
         """
-        return float(config_str.split(",")[1])
+        return float(config_str.split(';')[1])
 
-    def preprocess(self, rl_agent, state:np.ndarray, current_action_name:str, deploy:bool) -> np.ndarray:
+    def preprocess(self, rl_agent, state:np.ndarray, action_mapper, current_action_name:str, deploy:bool) -> np.ndarray:
         """
         Perform the preprocessing.
         :param rl_agent: The RL agent

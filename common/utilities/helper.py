@@ -57,7 +57,7 @@ def get_arguments() -> Dict[str, Any]:
                             default='')
 
     # Manipulator
-    arg_parser.add_argument('--manipulator', help='Manipulator configuration string.', type=str,
+    arg_parser.add_argument('--postprocessor', help='Manipulator configuration string.', type=str,
                             default='')
 
 

@@ -147,7 +147,6 @@ class MlFlowBridge:
         with open(p) as f:
             lines = f.readlines()
             best_reward = float(lines[-1].split(' ')[-2])
-
         print("Best Reward: ", best_reward)
         return best_reward
 
