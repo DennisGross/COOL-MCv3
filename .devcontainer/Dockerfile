@@ -35,9 +35,9 @@ RUN git clone https://github.com/moves-rwth/stormpy.git
 WORKDIR /home/vscode/stormpy
 RUN python setup.py build_ext --storm-dir /storm/build/ --jobs 1 develop
 
-WORKDIR /workspaces/coolmc
-COPY requirements.txt .
-RUN pip install -r requirements.txt
+#WORKDIR /workspaces/coolmc
+#COPY requirements.txt .
+#RUN pip install -r requirements.txt
 
 
 #COPY common common
