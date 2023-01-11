@@ -16,7 +16,7 @@ The following code runs an agent in an environment. The env variable represents 
 The Preprocessor object preprocesses the raw state. Preprocessing the raw state is often necessary in reinforcement learning because the raw state may be difficult for the agent to work with directly. Preprocessing can also be used to apply adversarial attacks and countermeasure simulations to the environment.
 
 The select_action method of the agent object is called to select an action based on the current state.
-The Manipulator object has a manipulate method that takes in the current state, action, reward, next state, and done flag, and returns modified versions of these variables.
+The Postprocessor object has a manipulate method that takes in the current state, action, reward, next state, and done flag, and returns modified versions of these variables.
 The step_learn method is then called to update the agent's knowledge based on the observed reward and next state.
 
 Finally, the episode_learn method is used by the agent for episodic learning (for example in REINFORCE).
@@ -29,13 +29,13 @@ while done == False:
     action = agent.select_action(state)
     next_state, reward, done = env.step(action)
     episode_reward+=reward
-    state, action, reward, next_state, done = Manipulator.manipulate(state,action,reward,next_state,done)
+    state, action, reward, next_state, done = Postprocessor.manipulate(state,action,reward,next_state,done)
     agent.step_learn(next_state, reward, done)
 agent.episode_learn()
 if prop_query == "":
     print("Reward:",episode_reward)
 else:
-    model_checking_result = model_checking(env,agent,Preprocessor, Manipulator)
+    model_checking_result = model_checking(env,agent,Preprocessor, Postprocessor)
     print("Model Checking Result:", model_checking_result)
 ```
 
@@ -67,28 +67,29 @@ It is important to make sure that your custom preprocessor is compatible with th
 
 
 
-### Manipulator
+### Postprocessor
+Postprocessors can be used to postprocess, for example the observed state (before being passed to the replay buffer), or to render the environment.
 Poisoning attacks in reinforcement learning (RL) are a type of adversarial attack that can be used to manipulate the training process of an RL agent. In a poisoning attack, the attacker injects malicious data into the training process in order to cause the RL agent to learn a suboptimal or malicious policy.
 There are several ways in which poisoning attacks can be carried out in RL. One common method is to manipulate the rewards that the RL agent receives during training. For example, the attacker could artificially inflate the rewards for certain actions, causing the RL agent to prioritize those actions and learn a suboptimal policy.
-Another method is to manipulate the observations that the RL agent receives during training. For example, the attacker could alter the sensory input to the RL agent in order to mislead it about the state of the environment. This can cause the RL agent to learn a policy that is suboptimal or even harmful.
+This can cause the RL agent to learn a policy that is suboptimal or even harmful.
 
-The **manipulator** allows the simulation of poissioning attacks during training.
+The **Postprocessor** allows the simulation of poissioning attacks during training.
 It manipulates the replay buffers of the RL agents.
 With the tight integration between RL and model checking, it is possible to analyze the effetivness of poissoning attacks.
 
-To use an existing manipulator, you can use the manipulator command-line argument `manipulator`. For example, the following command would randomly change the value if the next state is a terminal state and stores the change value into the RL agent experience: `--manipulator="random_done"`.
-Note, that manipulators get loaded automatically into the child runs. Use `--manipulator="None"` to remove the preprocessor in the child run.
-Use `--manipulator="OTHERMANIPULATOR"`, to use another manipulator in the child run.
-For more information about how to use manipulators, you can refer to the examples and to the manipulators package.
+To use an existing Postprocessor, you can use the Postprocessor command-line argument `postprocessor`. For example, the following command would randomly change the value if the next state is a terminal state and stores the change value into the RL agent experience: `--postprocessor="random_done"`.
+Note, that postprocessors get loaded automatically into the child runs. Use `--postprocessor="None"` to remove the preprocessor in the child run.
+Use `--postprocessor="OTHERPOSTPROCESSOR"`, to use another postprocessor in the child run.
+For more information about how to use postprocessors, you can refer to the examples and to the postprocessors package.
 
-1. If you want to create your own custom manipulator, you can follow these steps:
-2. Create a new Python script called MANIPULATORNAME.py in the manipulators package, and define a new class called MANIPULATORNAME inside it.
-3. Inherit the manipulator class from the manipulator.py script. This will give your custom manipulator all of the necessary methods and attributes of a manipulator.
-4. Override any methods that you want to customize in your custom manipulator.
-5. Import the MANIPULATORNAME.py script into the manipulator builder script, which is responsible for building and configuring the manipulator for your RL agent.
-6. Add the new MANIPULATORNAME to the build_manipulator function, which is responsible for constructing the manipulator object. You will need to pass any necessary arguments to the constructor of your MANIPULATORNAME class when building the manipulator.
+1. If you want to create your own custom postprocessor, you can follow these steps:
+2. Create a new Python script called POSTPROCESSORNAME.py in the postprocessors package, and define a new class called POSTPROCESSORNAME inside it.
+3. Inherit the postprocessor class from the postprocessor.py script. This will give your custom postprocessor all of the necessary methods and attributes of a postprocessor.
+4. Override any methods that you want to customize in your custom postprocessor.
+5. Import the POSTPROCESSORNAME.py script into the postprocessor builder script, which is responsible for building and configuring the postprocessor for your RL agent.
+6. Add the new POSTPROCESSORNAME to the build_postprocessor function, which is responsible for constructing the postprocessor object. You will need to pass any necessary arguments to the constructor of your POSTPROCESSORNAME class when building the postprocessor.
 
-It is important to make sure that your custom manipulator is compatible with the rest of the RL agent's code, and that it performs the manipulating tasks that you expect it to. You may need to test your custom manipulator to ensure that it is working correctly.
+It is important to make sure that your custom postprocessor is compatible with the rest of the RL agent's code, and that it performs the manipulating tasks that you expect it to. You may need to test your custom postprocessor to ensure that it is working correctly.
 
 ### Model Checking
 The callback function is used to incrementally build the induced DTMC, which is then passed to the model checker Storm. The callback function is called for every available action at every reachable state by the policy. It first gets the available actions at the current state. Second, it preprocesses the state and then queries the RL policy for an action. If the chosen action is not available, the callback function chooses the first action in the available action list. The callback function then checks if the chosen action was also the trigger for the current callback function and builds the induced DTMC from there if it was.

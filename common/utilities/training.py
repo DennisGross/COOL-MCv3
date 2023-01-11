@@ -76,7 +76,7 @@ def train(project, env, prop_type=''):
                 if prop_type=='reward' and project.command_line_arguments['deploy']==False:
                     project.save()
 
-            print(episode, "Episode\tReward", episode_reward, '\tAverage Reward', reward_of_sliding_window, "\tLast Property Result:", mdp_reward_result)
+            print(episode, "Episode\tReward", episode_reward, '\tAverage Reward', reward_of_sliding_window, "\tLast Property Result:", mdp_reward_result, "Agent", project.agent.epsilon)
             gc.collect()
     except KeyboardInterrupt:
         torch.cuda.empty_cache()
