@@ -9,7 +9,7 @@
 		"ghcr.io/rocker-org/devcontainer-features/apt-packages:1": {}
 	},
     "runArgs": [
-    ]
+    ],
 
 	// Features to add to the dev container. More info: https://containers.dev/features.
 	// "features": {},
@@ -19,6 +19,7 @@
 
 	// Use 'postCreateCommand' to run commands after the container is created.
 	// "postCreateCommand": "uname -a",
+    "postCreateCommand": "pip install -r /workspaces/coolmc/requirements.txt"
 
 	// Configure tool-specific properties.
 	// "customizations": {},
