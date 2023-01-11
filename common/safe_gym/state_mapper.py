@@ -119,3 +119,6 @@ class StateMapper:
             except:
                 pass
         return None
+
+    def get_state_size(self):
+        return len(self.mapper.keys())

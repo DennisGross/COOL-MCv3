@@ -149,7 +149,6 @@ rewards
 	[WEST] OUT_OF_FUEL & NOT_ON_GAS_STATION & PASSENGER_ON_BOARD: 1500 - jobs_done*500 + (max(passenger_dest_x-x, x-passenger_dest_x-x) + max(passenger_dest_y-y, y- passenger_dest_y));
 	[PICK_UP] OUT_OF_FUEL & NOT_ON_GAS_STATION & PASSENGER_ON_BOARD: 1500 - jobs_done*500 + (max(passenger_dest_x-x, x-passenger_dest_x-x) + max(passenger_dest_y-y, y- passenger_dest_y));
 	[DROP] OUT_OF_FUEL & NOT_ON_GAS_STATION & PASSENGER_ON_BOARD: 1500 - jobs_done*500 + (max(passenger_dest_x-x, x-passenger_dest_x-x) + max(passenger_dest_y-y, y- passenger_dest_y));
-    //OUT OF FUEL
 	[NORTH] OUT_OF_FUEL & NOT_ON_GAS_STATION & NOT_PASSENGER_ON_BOARD : 1500 - jobs_done*500 + (max(passenger_loc_x-x, x-passenger_loc_x) + max(passenger_loc_y-y, y-passenger_loc_y));
 	[EAST] OUT_OF_FUEL & NOT_ON_GAS_STATION & NOT_PASSENGER_ON_BOARD : 1500 - jobs_done*500 + (max(passenger_loc_x-x, x-passenger_loc_x) + max(passenger_loc_y-y, y-passenger_loc_y));
 	[SOUTH] OUT_OF_FUEL & NOT_ON_GAS_STATION & NOT_PASSENGER_ON_BOARD : 1500 - jobs_done*500 + (max(passenger_loc_x-x, x-passenger_loc_x) + max(passenger_loc_y-y, y-passenger_loc_y));

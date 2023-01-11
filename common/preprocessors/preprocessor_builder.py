@@ -3,6 +3,7 @@ from common.preprocessors.normalizer import *
 from common.preprocessors.single_agent_fgsm import *
 from common.preprocessors.feature_remapping import *
 from common.preprocessors.policy_abstraction import *
+from common.preprocessors.single_agent_denoiser import *
 '''
 HOW TO ADD MORE AGENTS?
 1) Create a new AGENTNAME.py with an AGENTNAME class
@@ -35,6 +36,9 @@ class PreprocessorBuilder():
             preprocessor = FeatureRemapper(state_mapper, command_line_arguments['preprocessor'])
             preprocessor.load(preprocessor_path)
         elif preprocessor_name == "policy_abstraction":
+            preprocessor = PolicyAbstraction(state_mapper, command_line_arguments['preprocessor'])
+            preprocessor.load(preprocessor_path)
+        elif preprocessor_name == "single_agent_denoiser":
             preprocessor = PolicyAbstraction(state_mapper, command_line_arguments['preprocessor'])
             preprocessor.load(preprocessor_path)
         return preprocessor
