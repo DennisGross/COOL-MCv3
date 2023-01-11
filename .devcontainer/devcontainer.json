@@ -9,8 +9,6 @@
 		"ghcr.io/rocker-org/devcontainer-features/apt-packages:1": {}
 	},
     "runArgs": [
-        "--gpus",
-        "all"
     ]
 
 	// Features to add to the dev container. More info: https://containers.dev/features.
