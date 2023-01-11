@@ -28,8 +28,8 @@ RUN apt-get update -qq && apt-get install -y --no-install-recommends \
 
 RUN git clone https://github.com/moves-rwth/pycarl.git
 WORKDIR /home/vscode/pycarl
-
 RUN apt-get -y install python3 python3-pip python3-dev
+RUN apt-get -y install python-is-python3
 RUN python setup.py build_ext develop
 
 WORKDIR /home/vscode/
