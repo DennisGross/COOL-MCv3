@@ -1,6 +1,7 @@
 FROM mcr.microsoft.com/devcontainers/base:focal
 
 RUN apt-get update
+
 RUN apt-get -y install build-essential git cmake libboost-all-dev libcln-dev libgmp-dev libginac-dev automake libglpk-dev libhwloc-dev libz3-dev libxerces-c-dev libeigen3-dev
 
 #WORKDIR /home/vscode/
@@ -27,6 +28,8 @@ RUN apt-get update -qq && apt-get install -y --no-install-recommends \
 
 RUN git clone https://github.com/moves-rwth/pycarl.git
 WORKDIR /home/vscode/pycarl
+
+RUN apt-get -y install python3 python3-pip python3-dev
 RUN python setup.py build_ext develop
 
 WORKDIR /home/vscode/
