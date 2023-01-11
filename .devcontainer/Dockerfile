@@ -17,10 +17,10 @@ RUN mkdir build
 RUN pwd
 RUN ls
 WORKDIR /home/vscode/storm/build
-
 RUN cmake ..
 RUN make
-WORKDIR /home/mycoolmc
+
+WORKDIR /home/vscode
 RUN apt-get update -qq && apt-get install -y --no-install-recommends \
     maven \
     uuid-dev \
