@@ -18,7 +18,7 @@ RUN ls
 WORKDIR /home/vscode/storm/build
 
 RUN cmake ..
-RUN make -j 1
+RUN make
 WORKDIR /home/mycoolmc
 RUN apt-get update -qq && apt-get install -y --no-install-recommends \
     maven \
@@ -27,13 +27,13 @@ RUN apt-get update -qq && apt-get install -y --no-install-recommends \
 
 RUN git clone https://github.com/moves-rwth/pycarl.git
 WORKDIR /home/vscode/pycarl
-RUN python setup.py build_ext --jobs 1 develop
+RUN python setup.py build_ext develop
 
 WORKDIR /home/vscode/
 
 RUN git clone https://github.com/moves-rwth/stormpy.git
 WORKDIR /home/vscode/stormpy
-RUN python setup.py build_ext --storm-dir /storm/build/ --jobs 1 develop
+RUN python setup.py build_ext --storm-dir /storm/build/ develop
 
 #WORKDIR /workspaces/coolmc
 #COPY requirements.txt .
