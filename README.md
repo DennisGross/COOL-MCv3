@@ -3,6 +3,15 @@
 
 ## Setup
 
+Install Docker.
+
+Install VSCode.
+
+Add VSCode extensions: docker, Visual Studio Code Dev Containers
+
+Open Remote Explorer, add (+), clone repository in container volume, add GITHUB-REPOSITORY URL, write coolmc volume, and coolmc target.
+Afterwards, the docker container will be created (it takes time).
+
 Verify that everything works: `python run_tests.py`
 
 Start MLFlow server in the background: `mlflow server -h 0.0.0.0 &`

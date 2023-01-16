@@ -33,6 +33,10 @@ class Project():
             except:
                 pass
             try:
+                del saved_command_line_arguments['project_name']
+            except:
+                pass
+            try:
                 del saved_command_line_arguments['constant_definitions']
             except:
                 pass

@@ -204,8 +204,8 @@ class DQNAgent(Agent):
         try:
             self.q_eval.load_checkpoint(os.path.join(model_root_folder_path,'q_eval.chkpt'))
             self.q_next.load_checkpoint(os.path.join(model_root_folder_path,'q_next.chkpt'))
-        except:
-            pass
+        except Exception as msg:
+            print(msg)
 
 
 
@@ -219,7 +219,6 @@ class DQNAgent(Agent):
             n_state (np.array): next state
             done (bool): Terminal state?
         """
-
         self.replay_buffer.store_transition(state, action, reward, n_state, done)
         self.exp_counter+=1
 

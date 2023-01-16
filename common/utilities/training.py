@@ -18,6 +18,7 @@ def train(project, env, prop_type=''):
     best_reward_of_sliding_window = project.mlflow_bridge.get_best_reward(project.command_line_arguments)
     best_property_result = project.mlflow_bridge.get_best_property_result(project.command_line_arguments)
     mdp_reward_result = None
+    satisfied = False
 
 
 
@@ -65,7 +66,7 @@ def train(project, env, prop_type=''):
                         project.save()
                     if best_property_result == 1:
                         print("Property satisfied!")
-                        break
+                        satisfied = True
                 # Log Property result
                 project.mlflow_bridge.log_property(all_property_results[-1], 'Property Result', episode)
 
@@ -78,6 +79,8 @@ def train(project, env, prop_type=''):
 
             print(episode, "Episode\tReward", episode_reward, '\tAverage Reward', reward_of_sliding_window, "\tLast Property Result:", mdp_reward_result, "Agent", project.agent.epsilon)
             gc.collect()
+            if satisfied:
+                break
     except KeyboardInterrupt:
         torch.cuda.empty_cache()
         gc.collect()

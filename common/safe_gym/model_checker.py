@@ -160,6 +160,7 @@ class ModelChecker():
 
             cond1 = False
             selected_action = self.__get_action_for_state(env, agent, state)
+            #print(state, selected_action)
             if (selected_action in available_actions) is not True:
                 selected_action = available_actions[0]
 
@@ -186,7 +187,7 @@ class ModelChecker():
 
         model_checking_time = time.time() - model_checking_start_time
 
-        #stormpy.export_to_drn(model,"test.drn")
+        stormpy.export_to_drn(model,"test.drn")
         initial_state = model.initial_states[0]
         #print('Result for initial state', result.at(initial_state))
         mdp_result = result.at(initial_state)
