@@ -3,6 +3,7 @@ from common.utilities.helper import *
 
 
 if __name__ == '__main__':
+    print("=======================")
     args = get_arguments()
     set_random_seed(args['seed'])
 

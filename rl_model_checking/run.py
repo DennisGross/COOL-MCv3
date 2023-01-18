@@ -67,18 +67,20 @@ if __name__ == '__main__':
     m_project.command_line_arguments['prop'], prepared, original_prop = prepare_prop(m_project.command_line_arguments['prop'])
 
     # Set property as run name
-    m_project.mlflow_bridge.set_property_query_as_run_name(original_prop + " for " + original_prop)
+    m_project.mlflow_bridge.set_property_query_as_run_name(original_prop + " for " + command_line_arguments['constant_definitions'])
 
     # Model checking
     mdp_reward_result, model_checking_info = env.storm_bridge.model_checker.induced_markov_chain(m_project.agent, m_project.preprocessor, env, m_project.command_line_arguments['constant_definitions'], m_project.command_line_arguments['prop'])
-    m_project.mlflow_bridge.log_best_property(mdp_reward_result)
+    m_project.mlflow_bridge.log_result(mdp_reward_result)
 
     run_id = m_project.mlflow_bridge.get_run_id()
     print(f'{original_prop}:\t{mdp_reward_result}')
     print(f'Model Size:\t\t{model_checking_info["model_size"]}')
+    print(f'Number of Transitions:\t{model_checking_info["model_transitions"]}')
     print(f'Model Building Time:\t{model_checking_info["model_building_time"]}')
     print(f'Model Checking Time:\t{model_checking_info["model_checking_time"]}')
+    print("Constant definitions:\t" + m_project.command_line_arguments['constant_definitions'])
     print("Run ID: " + run_id)
-    LastRunManager.write_last_run(m_project.command_line_arguments['project_name'], run_id)
+    #LastRunManager.write_last_run(m_project.command_line_arguments['project_name'], run_id)
     m_project.save()
     m_project.close()

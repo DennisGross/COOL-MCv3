@@ -118,3 +118,5 @@ def callback_function(state_valuation, action_index):
 
 constructor = stormpy.make_sparse_model_builder(prism_program, options,stormpy.StateValuationFunctionActionMaskDouble(callback_function))
 ```
+
+

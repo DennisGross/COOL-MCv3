@@ -14,6 +14,7 @@ class FGSM(Preprocessor):
         self.parse_attack_config(attack_config_str)
 
     def parse_attack_config(self, attack_config_str: str) -> None:
+        # fgsm;1
         attack_name, epsilon = attack_config_str.split(';')
         self.attack_name = attack_name
         self.epsilon = float(epsilon)

@@ -152,7 +152,6 @@ class ModelChecker():
             if preprocessor!=None:
                 state = preprocessor.preprocess(agent, state, env.action_mapper, current_action_name, True)
 
-
             # Check if selected action is available..
             # if not set action to the first available action
             if len(available_actions) == 0:
@@ -178,7 +177,7 @@ class ModelChecker():
                                                             incremental_building))
         model = constructor.build()
         model_size = len(model.states)
-
+        model_transitions = model.nr_transitions
         model_checking_start_time = time.time()
 
         properties = stormpy.parse_properties(formula_str, prism_program)
@@ -192,7 +191,6 @@ class ModelChecker():
         #print('Result for initial state', result.at(initial_state))
         mdp_result = result.at(initial_state)
 
-        info = {"model_building_time": (time.time()-start_time), "model_checking_time": model_checking_time, "model_size": model_size}
-        # Update StateActionCollector
-        assert isinstance(mdp_result, float)
+        info = {"model_building_time": (time.time()-start_time), "model_checking_time": model_checking_time, "model_size": model_size, "model_transitions": model_transitions}
+
         return mdp_result, info

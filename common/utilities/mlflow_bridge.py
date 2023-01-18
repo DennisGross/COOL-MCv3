@@ -46,12 +46,12 @@ class MlFlowBridge:
     def __copy_run(self, experiment, run):
         # Find unique run_id
         exists = True
-        new_run_id = ''.join(random.choices(string.ascii_lowercase + string.digits, k=len(run.info.run_id)+10))
+        new_run_id = ''.join(random.choices(string.ascii_lowercase + string.digits, k=len(run.info.run_id)))
         run_path = os.path.join('../mlruns', experiment.experiment_id, run.info.run_id)
         new_run_path = os.path.join('../mlruns', experiment.experiment_id, new_run_id)
         # print working directory
         while exists:
-            new_run_id = ''.join(random.choices(string.ascii_lowercase + string.digits, k=len(run.info.run_id)+10))
+            new_run_id = ''.join(random.choices(string.ascii_lowercase + string.digits, k=len(run.info.run_id)))
             new_run_path = os.path.join('../mlruns', experiment.experiment_id, new_run_id)
             exists = os.path.exists(new_run_path)
         copy_tree(run_path, new_run_path)
@@ -132,8 +132,9 @@ class MlFlowBridge:
     def log_best_property_result(self, best_property_result, episode):
         mlflow.log_metric(key='best_property_result', value=best_property_result, step= episode)
 
-    def log_best_property(self, best_property_result):
-        mlflow.log_param("best_property_result", best_property_result)
+    def log_result(self, result):
+        mlflow.log_param('result', result)
+
 
     def get_best_reward(self,command_line_arguments):
         run_path = self.get_agent_path().replace("/artifacts/model","")

@@ -13,7 +13,7 @@ class PolicyAbstraction(Preprocessor):
         Parse the configuration.
         :param config_str: The configuration.
 
-        Example: feature_remapping;fuel=[0,2,4,6]
+        Example: policy_abstraction;fuel=[0,2,4,6]
         """
         self.feature_mapper = {}
         for feature in config_str.split(";")[1:]:
