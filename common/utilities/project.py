@@ -9,7 +9,7 @@ class Project():
         self.command_line_arguments = command_line_arguments
         self.mlflow_bridge = None
         self.agent = None
-        self.preprocessor = None
+        self.preprocessors = None
         self.manipulator = None
 
 
@@ -116,11 +116,11 @@ class Project():
     def create_preprocessor(self, command_line_arguments, observation_space, number_of_actions, state_mapper):
         preprocessor_path = self.mlflow_bridge.get_agent_path().replace("model", "")
         # Build agent with the model and the hyperparameters
-        self.preprocessor = PreprocessorBuilder.build_preprocessor(preprocessor_path, command_line_arguments, observation_space, number_of_actions, state_mapper)
-        if self.preprocessor != None:
-            print("Preprocssor", command_line_arguments['preprocessor'])
+        self.preprocessors = PreprocessorBuilder.build_preprocessors(preprocessor_path, command_line_arguments, observation_space, number_of_actions, state_mapper)
+        if self.preprocessors != None:
+            print("Preprocssors", command_line_arguments['preprocessor'])
             #print("Preprocessor loaded from", preprocessor_path)
-        return self.preprocessor
+        return self.preprocessors
 
 
     def create_postprocessor(self, command_line_arguments, observation_space, number_of_actions, state_mapper):
@@ -137,8 +137,9 @@ class Project():
         if self.agent != None:
             self.agent.save()
         # Preprocessor
-        if self.preprocessor != None:
-            self.preprocessor.save()
+        if self.preprocessors != None:
+            for preprocessor in self.preprocessors:
+                preprocessor.save()
         # Manipulator
         if self.manipulator != None:
             self.manipulator.save()

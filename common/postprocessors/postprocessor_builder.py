@@ -13,7 +13,7 @@ class PostprocessorBuilder():
 
 
     @staticmethod
-    def build_postprocessor(manipulator_path, command_line_arguments,observation_space, action_space,state_mapper):
+    def build_postprocessor(postprocessor_path, command_line_arguments,observation_space, action_space,state_mapper):
         #print('Build model with', model_root_folder_path, command_line_arguments)
         #print('Environment', observation_space.shape, action_space.n)
         try:
@@ -24,6 +24,6 @@ class PostprocessorBuilder():
         postprocessor_name = command_line_arguments['postprocessor'].split(";")[0]
         if postprocessor_name == "random_done":
             postprocessor = RandomDone(state_mapper, command_line_arguments['postprocessor'])
-            postprocessor.load(manipulator_path)
+            postprocessor.load(postprocessor_path)
 
         return postprocessor

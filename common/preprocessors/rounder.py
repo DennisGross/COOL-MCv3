@@ -1,18 +1,18 @@
+from common.preprocessors.preprocessor import Preprocessor
 import numpy as np
-
-class Preprocessor:
+class Rounder(Preprocessor):
 
     def __init__(self, state_mapper, config_str):
-        self.state_mapper = state_mapper
-        self.config_str = config_str
-        self.buffer = {}
+        super().__init__(state_mapper, config_str)
+        self.attack_name, self.rounding_type = self.parse_config(self.config_str)
 
     def parse_config(self, config_str:str) -> None:
         """
         Parse the configuration.
         :param config_str: The configuration.
         """
-        raise NotImplementedError()
+        attack_name, rounding_type = config_str.split(';')
+        return attack_name, rounding_type
 
     def preprocess(self, rl_agent, state:np.ndarray, action_mapper, current_action_name:str, deploy:bool) -> np.ndarray:
         """
@@ -22,7 +22,13 @@ class Preprocessor:
         :param state: The state.
         :return: The preprocessed state.
         """
-        raise NotImplementedError()
+        # rounds to the nearest integer
+        if self.rounding_type == 'round':
+            return np.round(state)
+        elif self.rounding_type == 'floor':
+            return np.floor(state)
+        else:
+            raise ValueError('Rounding type not supported')
 
     def save(self):
         """
@@ -38,14 +44,4 @@ class Preprocessor:
             root_folder ([str]): Path to the folder
         """
         pass
-
-    def update_buffer(self, state, value, reset=True):
-        if reset:
-            self.buffer = {}
-        self.buffer[str(state)] = value
-
-    def in_buffer(self, state: np.ndarray) -> bool:
-        if str(state) in self.buffer.keys():
-            return True
-        return False
 

@@ -86,7 +86,7 @@ class ModelChecker():
         assert isinstance(action_name, str)
         return action_name
 
-    def induced_markov_chain(self, agent: common.rl_agents, preprocessor, env,
+    def induced_markov_chain(self, agent: common.rl_agents, preprocessors, env,
                              constant_definitions: str,
                              formula_str: str) -> Tuple[float, int]:
         """Creates a Markov chain of an MDP induced by a policy
@@ -149,8 +149,9 @@ class ModelChecker():
             state = self.__get_numpy_state(env, state)
 
             # Preprocess state
-            if preprocessor!=None:
-                state = preprocessor.preprocess(agent, state, env.action_mapper, current_action_name, True)
+            if preprocessors!=None:
+                for preprocessor in preprocessors:
+                    state = preprocessor.preprocess(agent, state, env.action_mapper, current_action_name, True)
 
             # Check if selected action is available..
             # if not set action to the first available action

@@ -89,10 +89,12 @@ class DeepFool(Preprocessor):
 
                 loop_i += 1
 
+
             r_tot = (1+self.overshoot)*r_tot
 
             #return r_tot, loop_i, label, k_i, pert_image
             adv_perturbation = pert_image - state
             #print(rl_agent.select_action(state), rl_agent.select_action(pert_image.numpy()))
-            self.update_buffer(state.numpy(), adv_perturbation.numpy(), True)
+            self.update_buffer(state.long().numpy(), adv_perturbation.numpy(), True)
+
             return pert_image.numpy()

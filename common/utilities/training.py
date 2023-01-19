@@ -31,9 +31,11 @@ def train(project, env, prop_type=''):
             while done == False:
                 if state.__class__.__name__ == 'int':
                     state = [state]
-                if project.preprocessor != None:
+                if project.preprocessors != None:
                     # Preprocessing
-                    state = project.preprocessor.preprocess(project.agent, state, env.action_mapper, "", project.command_line_arguments['deploy'])
+                    # Add preprocessor loop here
+                    for preprocessor in project.preprocessors:
+                        state = preprocessor.preprocess(project.agent, state, env.action_mapper, "", project.command_line_arguments['deploy'])
                 action = project.agent.select_action(state, project.command_line_arguments['deploy'])
                 next_state, reward, done, info = env.step(action)
                 if next_state.__class__.__name__ == 'int':

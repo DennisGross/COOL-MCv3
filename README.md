@@ -34,7 +34,7 @@ state = env.reset()
 done = False
 episode_reward = 0
 while done == False:
-    state = Preprocessor.preprocess_state(state, agent, env)
+    state = Preprocessors.preprocess_state(state, agent, env)
     action = agent.select_action(state)
     next_state, reward, done = env.step(action)
     episode_reward+=reward
@@ -44,7 +44,7 @@ agent.episode_learn()
 if prop_query == "":
     print("Reward:",episode_reward)
 else:
-    model_checking_result = model_checking(env,agent,Preprocessor, Postprocessor)
+    model_checking_result = model_checking(env,agent,Preprocessors, Postprocessor)
     print("Model Checking Result:", model_checking_result)
 ```
 
@@ -73,6 +73,8 @@ For more information about how to use preprocessors, you can refer to the exampl
 6. Add the new PREPROCESSORNAME to the build_preprocessor function, which is responsible for constructing the preprocessor object. You will need to pass any necessary arguments to the constructor of your PREPROCESSORNAME class when building the preprocessor.
 
 It is important to make sure that your custom preprocessor is compatible with the rest of the RL agent's code, and that it performs the preprocessing tasks that you expect it to. You may need to test your custom preprocessor to ensure that it is working correctly.
+
+It is possible to concat multiple preprocessors after each other: `--preprocessor="normalizer,10#fgsm,1"`.
 
 
 

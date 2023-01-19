@@ -2,29 +2,53 @@
 \begin{tikzpicture}
 
 \definecolor{darkgray176}{RGB}{176,176,176}
+\definecolor{darkorange25512714}{RGB}{255,127,14}
+\definecolor{forestgreen4416044}{RGB}{44,160,44}
+\definecolor{lightgray204}{RGB}{204,204,204}
 \definecolor{steelblue31119180}{RGB}{31,119,180}
 
 \begin{axis}[
+legend cell align={left},
+legend style={
+  fill opacity=0.8,
+  draw opacity=1,
+  text opacity=1,
+  at={(1.03,1)},
+  anchor=north west,
+  draw=lightgray204
+},
 tick align=outside,
 tick pos=left,
 x grid style={darkgray176},
-xlabel={Attack Strength (L0-Norm)},
 xmajorgrids,
-xmin=-0.64, xmax=4.64,
+xmin=-0.5455, xmax=2.5455,
 xtick style={color=black},
-xtick={0,1,2,3,4},
-xticklabels={0.1,0.2,0.3,0.4,0.5},
+xtick={0,1,2},
+xticklabels={done1,done2,empty},
 y grid style={darkgray176},
-ylabel={Probability Impact},
+ylabel={Probability},
 ymajorgrids,
 ymin=0, ymax=1.05,
 ytick style={color=black}
 ]
-\draw[draw=none,fill=steelblue31119180] (axis cs:-0.4,0) rectangle (axis cs:0.4,0.0625);
-\draw[draw=none,fill=steelblue31119180] (axis cs:0.6,0) rectangle (axis cs:1.4,0);
-\draw[draw=none,fill=steelblue31119180] (axis cs:1.6,0) rectangle (axis cs:2.4,0);
-\draw[draw=none,fill=steelblue31119180] (axis cs:2.6,0) rectangle (axis cs:3.4,1);
-\draw[draw=none,fill=steelblue31119180] (axis cs:3.6,0) rectangle (axis cs:4.4,1);
+\draw[draw=none,fill=steelblue31119180] (axis cs:-0.405,0) rectangle (axis cs:-0.155,1);
+\addlegendimage{ybar,ybar legend,draw=none,fill=steelblue31119180}
+\addlegendentry{FGSM}
+
+\draw[draw=none,fill=steelblue31119180] (axis cs:0.595,0) rectangle (axis cs:0.845,0);
+\draw[draw=none,fill=steelblue31119180] (axis cs:1.595,0) rectangle (axis cs:1.845,1);
+\draw[draw=none,fill=darkorange25512714] (axis cs:-0.125,0) rectangle (axis cs:0.125,1);
+\addlegendimage{ybar,ybar legend,draw=none,fill=darkorange25512714}
+\addlegendentry{FFGSM}
+
+\draw[draw=none,fill=darkorange25512714] (axis cs:0.875,0) rectangle (axis cs:1.125,0.625);
+\draw[draw=none,fill=darkorange25512714] (axis cs:1.875,0) rectangle (axis cs:2.125,0.0625);
+\draw[draw=none,fill=forestgreen4416044] (axis cs:0.155,0) rectangle (axis cs:0.405,1);
+\addlegendimage{ybar,ybar legend,draw=none,fill=forestgreen4416044}
+\addlegendentry{Deep Fool}
+
+\draw[draw=none,fill=forestgreen4416044] (axis cs:1.155,0) rectangle (axis cs:1.405,0.125);
+\draw[draw=none,fill=forestgreen4416044] (axis cs:2.155,0) rectangle (axis cs:2.405,0.875);
 \end{axis}
 
 \end{tikzpicture}
