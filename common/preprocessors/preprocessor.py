@@ -45,7 +45,7 @@ class Preprocessor:
         self.buffer[str(state)] = value
 
     def in_buffer(self, state: np.ndarray) -> bool:
-        if str(state) in self.buffer.keys():
+        if str(state.astype(np.int32)) in self.buffer.keys():
             return True
         return False
 

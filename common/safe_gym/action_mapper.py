@@ -27,6 +27,9 @@ class ActionMapper:
             self.actions.append(action_name)
             self.actions.sort()
 
+    def get_action_count(self):
+        return len(self.actions)
+
     def action_index_to_action_name(self, nn_action_idx: int) -> str:
         """Action Index to action name.
 

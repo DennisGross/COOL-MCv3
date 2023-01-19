@@ -68,6 +68,10 @@ class Project():
             except:
                 pass
             try:
+                del saved_command_line_arguments['training_threshold']
+            except:
+                pass
+            try:
                 del saved_command_line_arguments['num_episodes']
             except:
                 pass

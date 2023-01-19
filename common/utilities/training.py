@@ -64,7 +64,7 @@ def train(project, env, prop_type=''):
                     project.mlflow_bridge.log_best_property_result(best_property_result, episode)
                     if project.command_line_arguments['deploy']==False:
                         project.save()
-                    if best_property_result == 1:
+                    if (best_property_result <= project.command_line_arguments['training_threshold'] and prop_type == "min_prop" and DEFAULT_TRAINING_THRESHOLD != project.command_line_arguments['training_threshold']) or ( best_property_result >= project.command_line_arguments['training_threshold'] and prop_type == "max_prop" and DEFAULT_TRAINING_THRESHOLD != project.command_line_arguments['training_threshold']):
                         print("Property satisfied!")
                         satisfied = True
                 # Log Property result
@@ -77,7 +77,11 @@ def train(project, env, prop_type=''):
                 if prop_type=='reward' and project.command_line_arguments['deploy']==False:
                     project.save()
 
-            print(episode, "Episode\tReward", episode_reward, '\tAverage Reward', reward_of_sliding_window, "\tLast Property Result:", mdp_reward_result, "Agent", project.agent.epsilon)
+                if (prop_type == "reward" and best_reward_of_sliding_window >= project.command_line_arguments['training_threshold']) and DEFAULT_TRAINING_THRESHOLD != project.command_line_arguments['training_threshold']:
+                    print("Property satisfied!")
+                    satisfied = True
+
+            print(episode, "Episode\tReward", episode_reward, '\tAverage Reward', reward_of_sliding_window, "\tLast Property Result:", mdp_reward_result)
             gc.collect()
             if satisfied:
                 break

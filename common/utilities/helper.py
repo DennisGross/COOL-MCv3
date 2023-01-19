@@ -9,6 +9,7 @@ import torch
 DEVICE = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
 SAFE_TRAINING_TASK = "safe_training"
 RL_MODEL_CHECKING_TASK = "rl_model_checking"
+DEFAULT_TRAINING_THRESHOLD = -1000000000000
 
 def get_arguments() -> Dict[str, Any]:
     """Parses all the COOL-MC arguments
@@ -36,6 +37,8 @@ def get_arguments() -> Dict[str, Any]:
                             default='')
     arg_parser.add_argument('--seed', help='Random Seed for numpy, random, storm, pytorch', type=int,
                             default=-1)
+    arg_parser.add_argument('--training_threshold', help='Range Plotting Flag.', type=int,
+                            default=DEFAULT_TRAINING_THRESHOLD)
     # Training
     arg_parser.add_argument('--num_episodes', help='What is the number of training episodes?', type=int,
                             default=1000)

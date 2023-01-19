@@ -4,6 +4,7 @@ from common.preprocessors.single_agent_fgsm import *
 from common.preprocessors.feature_remapping import *
 from common.preprocessors.policy_abstraction import *
 from common.preprocessors.single_agent_denoiser import *
+from common.preprocessors.single_agent_deepfool_attack import *
 '''
 HOW TO ADD MORE AGENTS?
 1) Create a new AGENTNAME.py with an AGENTNAME class
@@ -31,6 +32,9 @@ class PreprocessorBuilder():
             preprocessor.load(preprocessor_path)
         elif preprocessor_name == "fgsm":
             preprocessor = FGSM(state_mapper, command_line_arguments['preprocessor'])
+            preprocessor.load(preprocessor_path)
+        elif preprocessor_name == "deepfool":
+            preprocessor = DeepFool(state_mapper, command_line_arguments['preprocessor'])
             preprocessor.load(preprocessor_path)
         elif preprocessor_name == "feature_remapping":
             preprocessor = FeatureRemapper(state_mapper, command_line_arguments['preprocessor'])
