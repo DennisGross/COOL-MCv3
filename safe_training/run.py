@@ -10,6 +10,7 @@ from common.utilities.project import Project
 
 
 if __name__ == '__main__':
+    os.environ['MKL_NUM_THREADS'] = '1'
     command_line_arguments = get_arguments()
     set_random_seed(command_line_arguments['seed'])
     # Command line arguments set up

@@ -6,9 +6,9 @@
 @reward_models
 
 @nr_states
-14
+13
 @nr_choices
-14
+13
 @model
 state 0 init
 //[!done	& !passenger	& x=2	& y=2	& fuel=10	& jobs_done=0	& passenger_loc_x=0	& passenger_loc_y=4	& passenger_dest_x=0	& passenger_dest_y=0]
@@ -58,11 +58,7 @@ state 11
 //[!done	& !passenger	& x=2	& y=4	& fuel=1	& jobs_done=0	& passenger_loc_x=0	& passenger_loc_y=4	& passenger_dest_x=0	& passenger_dest_y=0]
 	action SOUTH
 		12 : 1
-state 12
+state 12 empty
 //[!done	& !passenger	& x=2	& y=3	& fuel=0	& jobs_done=0	& passenger_loc_x=0	& passenger_loc_y=4	& passenger_dest_x=0	& passenger_dest_y=0]
-	action PICK_UP
-		13 : 1
-state 13
-//[done	& !passenger	& x=2	& y=3	& fuel=0	& jobs_done=0	& passenger_loc_x=0	& passenger_loc_y=4	& passenger_dest_x=0	& passenger_dest_y=0]
-	action SOUTH
-		13 : 1
+	action __NOLABEL__
+		12 : 1

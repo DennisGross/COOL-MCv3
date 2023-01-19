@@ -3,41 +3,39 @@ import matplotlib.pyplot as plt
 import tikzplotlib
 
 
-labels = ['done1', 'done2', 'empty']
-# done1, done2, empty
-fgsm = [1,0.,1]
-ffgsm = [1,0.625,0.0625]
-deepfool = [1,0.125,0.875]
+labels = ['done2', 'done1', 'empty']
+# done2, done1, empty
+fgsm = [0.625,1,0.0625]
+fgsm_round = [1,1,0]
+fgsm_floor = [0,0,1]
+deepfool = [0.125,1,0.875]
+deepfool_round = [0.75,1,0.25]
+deepfool_floor = [0,0,1]
 
-x = np.arange(len(labels))  # the label locations
-width = 0.25  # the width of the bars
+barWidth = 0.15
 
-fig, ax = plt.subplots()
+r1 = np.arange(len(fgsm))
+r2 = [x + barWidth for x in r1]
+r3 = [x + barWidth for x in r2]
+r4 = [x + barWidth for x in r3]
+r5 = [x + barWidth for x in r4]
+r6 = [x + barWidth for x in r5]
 
-rects1 = ax.bar(x - width - 0.03, fgsm, width, label='FGSM', zorder=2)
-rects2 = ax.bar(x, ffgsm, width, label='FFGSM', zorder=2)
-rects3 = ax.bar(x + width + 0.03, deepfool, width, label='Deep Fool', zorder=2)
+plt.bar(r1, fgsm, width=barWidth, label='fgsm', zorder=2)
+plt.bar(r2, fgsm_round, width=barWidth,label='fgsm_round', zorder=2)
+plt.bar(r3, fgsm_floor, width=barWidth, label='fgsm_floor', zorder=2)
+plt.bar(r4, deepfool, width=barWidth, label='deepfool', zorder=2)
+plt.bar(r5, deepfool_round, width=barWidth, label='deepfool_round', zorder=2)
+plt.bar(r6, deepfool_floor, width=barWidth, label='deepfool_floor', zorder=2)
 
-# Add some text for labels, title and custom x-axis tick labels, etc.
-ax.set_ylabel('Probability')
-#ax.set_title('Scores by group and gender')
-ax.set_xticks(x, labels)
+plt.xlabel('bar')
+plt.xticks([r + (barWidth*2) for r in range(len(fgsm))], labels)
+plt.ylabel('value')
 plt.legend(bbox_to_anchor=(1.03, 1), loc='upper left', borderaxespad=0.)
+plt.grid(zorder=1)
+plt.tight_layout()
+plt.show()
 
-#ax.bar_label(rects1, padding=3)
-#ax.bar_label(rects2, padding=3)
-#ax.bar_label(rects3, padding=3)
-
-specific_ticks = [0, 1, 2]
-
-# Setting the xticks to specific positions
-ax.set_xticks(specific_ticks)
-
-# Set x-axis labels
-ax.set_xticklabels(['done1',  'done2',  'empty'])
-
-ax.grid(zorder=1)
-fig.tight_layout()
 
 
 

@@ -4,7 +4,7 @@ class Postprocessor:
         self.state_mapper = state_mapper
         self.config = config
 
-    def manipulate(self, rl_agent, state, action, reward, next_state, done):
+    def postprocess(self, rl_agent, state, action, reward, next_state, done):
         raise NotImplementedError()
 
     def save(self):

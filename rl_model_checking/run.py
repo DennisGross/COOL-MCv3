@@ -23,6 +23,7 @@ def prepare_prop(prop):
 
 
 if __name__ == '__main__':
+    os.environ['MKL_NUM_THREADS'] = '1'
     # Get command line arguments
     command_line_arguments = get_arguments()
     # Set seed

@@ -118,7 +118,7 @@ class Project():
         # Build agent with the model and the hyperparameters
         self.preprocessors = PreprocessorBuilder.build_preprocessors(preprocessor_path, command_line_arguments, observation_space, number_of_actions, state_mapper)
         if self.preprocessors != None:
-            print("Preprocssors", command_line_arguments['preprocessor'])
+            print("Preprocessors", command_line_arguments['preprocessor'])
             #print("Preprocessor loaded from", preprocessor_path)
         return self.preprocessors
 
@@ -128,7 +128,7 @@ class Project():
         # Build agent with the model and the hyperparameters
         self.postprocessor = PostprocessorBuilder.build_postprocessor(postprocessor_path, command_line_arguments, observation_space, number_of_actions, state_mapper)
         if self.postprocessor != None:
-            print("Manipulator loaded.")
+            print("Postprocessor loaded.")
         return self.postprocessor
 
 
