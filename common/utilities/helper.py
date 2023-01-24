@@ -37,7 +37,7 @@ def get_arguments() -> Dict[str, Any]:
                             default='')
     arg_parser.add_argument('--seed', help='Random Seed for numpy, random, storm, pytorch', type=int,
                             default=-1)
-    arg_parser.add_argument('--training_threshold', help='Range Plotting Flag.', type=int,
+    arg_parser.add_argument('--training_threshold', help='Range Plotting Flag.', type=float,
                             default=DEFAULT_TRAINING_THRESHOLD)
     # Training
     arg_parser.add_argument('--num_episodes', help='What is the number of training episodes?', type=int,

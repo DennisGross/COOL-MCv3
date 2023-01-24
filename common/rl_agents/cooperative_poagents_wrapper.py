@@ -102,7 +102,8 @@ class CooperativePOAgents(Agent):
             # Extract state_dimension from prism file for each agent
             state_dimension = self.po_manager.get_observation_dimension_for_agent_idx(i)
             self.agents.append(DQNAgent(state_dimension, self.number_of_neurons,len(self.all_actions[i]), epsilon=self.command_line_arguments['epsilon'], epsilon_dec=self.command_line_arguments['epsilon_dec'], epsilon_min=self.command_line_arguments['epsilon_min'], gamma=self.command_line_arguments['gamma'], learning_rate=self.command_line_arguments['lr'], replace=self.command_line_arguments['replace'], batch_size=self.command_line_arguments['batch_size'], replay_buffer_size=self.command_line_arguments['replay_buffer_size']))
-            self.agents[i].load(self.model_root_folder_path[0]+str(i))
+            #print(self.model_root_folder_path)
+            self.agents[i].load(self.model_root_folder_path+str(i))
 
 
 
