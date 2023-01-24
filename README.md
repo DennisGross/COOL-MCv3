@@ -1,20 +1,7 @@
 # COOL-MC
 
 
-## Setup
 
-Install Docker.
-
-Install VSCode.
-
-Add VSCode extensions: docker, Visual Studio Code Dev Containers
-
-Open Remote Explorer, add (+), clone repository in container volume, add GITHUB-REPOSITORY URL, write coolmc volume, and coolmc target.
-Afterwards, the docker container will be created (it takes time).
-
-Verify that everything works: `python run_tests.py`
-
-Start MLFlow server in the background: `mlflow server -h 0.0.0.0 &`
 
 ## Architecture
 We will first describe the main components of COOL-MC and then delve into the details.
@@ -120,6 +107,21 @@ def callback_function(state_valuation, action_index):
 
 constructor = stormpy.make_sparse_model_builder(prism_program, options,stormpy.StateValuationFunctionActionMaskDouble(callback_function))
 ```
+
+## Setup
+
+Install Docker.
+
+Install VSCode.
+
+Add VSCode extensions: docker, Visual Studio Code Dev Containers
+
+Open Remote Explorer, add (+), clone repository in container volume, add GITHUB-REPOSITORY URL, write coolmc volume, and coolmc target.
+Afterwards, the docker container will be created (it takes time).
+
+Verify that everything works: `python run_tests.py`
+
+Start MLFlow server in the background: `mlflow server -h 0.0.0.0 &`
 
 ## Experiments
 To run the experiments from our paper, use the bash scripts in examples (*_experiments.sh).

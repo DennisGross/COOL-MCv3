@@ -18,7 +18,8 @@ class MlFlowBridge:
         self.task = task
         self.parent_run_id = parent_run_id.strip()
         self.client = MlflowClient()
-        #mlflow.set_tracking_uri(self.project_dir)
+        #mlflow.set_tracking_uri(project_name)
+        # Set project for experiment
         try:
             self.experiment_id = self.client.create_experiment(self.experiment_name)
         except:
@@ -43,18 +44,31 @@ class MlFlowBridge:
     def set_property_query_as_run_name(self, prop):
         mlflow.tracking.MlflowClient().set_tag(self.run.info.run_id, "mlflow.runName", prop)
 
+    def check_folder_in_tree(self, folder_name, root_folder):
+        for root, dirs, files in os.walk(root_folder):
+            if folder_name in dirs:
+                return True
+        return False
+
+
     def __copy_run(self, experiment, run):
         # Find unique run_id
         exists = True
-        new_run_id = ''.join(random.choices(string.ascii_lowercase + string.digits, k=len(run.info.run_id)))
+        # Make sure that run_id length is not too long
+        run_id_length = len(run.info.run_id)+10
+        if run_id_length > 50:
+            run_id_length = 32
+        new_run_id = ''.join(random.choices(string.ascii_lowercase + string.digits, k=run_id_length))
         run_path = os.path.join('../mlruns', experiment.experiment_id, run.info.run_id)
         new_run_path = os.path.join('../mlruns', experiment.experiment_id, new_run_id)
         # print working directory
+        print("Copying run...")
         while exists:
-            new_run_id = ''.join(random.choices(string.ascii_lowercase + string.digits, k=len(run.info.run_id)))
+            new_run_id = ''.join(random.choices(string.ascii_lowercase + string.digits, k=run_id_length))
             new_run_path = os.path.join('../mlruns', experiment.experiment_id, new_run_id)
-            exists = os.path.exists(new_run_path)
+            exists = self.check_folder_in_tree(new_run_id, '../mlruns')
         copy_tree(run_path, new_run_path)
+        print("Copied run to " + new_run_path)
         # Modify Meta
         f = open(os.path.join(new_run_path,'meta.yaml'),'r')
         lines = f.readlines()
@@ -97,7 +111,6 @@ class MlFlowBridge:
     def load_command_line_arguments(self):
         meta_folder_path = mlflow.get_artifact_uri(artifact_path="meta").replace('/file:/','')
         # If rerun, take all the command line arguments from previous run into account except the following:
-        #print(meta_folder_path)
         command_line_arguments_file_path = os.path.join(meta_folder_path, 'command_line_arguments.json')[7:]
         #print(command_line_arguments_file_path)
         if os.path.exists(command_line_arguments_file_path):
