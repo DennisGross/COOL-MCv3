@@ -42,6 +42,12 @@ class Agent():
         """
         pass
 
+    def model_checking_learn(self, model_checking_result, model_checking_info):
+        """
+        This method is called in after model checking was executed and gets the model checking result passed.
+        """
+        pass
+
     def get_hyperparameters(self):
         """
         Get the RL agent hyperparameters

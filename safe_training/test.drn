@@ -11,77 +11,58 @@
 14
 @model
 state 0 init
-//[pos=0]
-	action a2_right
-		0 : 0.3335
-		1 : 0.333
-		2 : 0.3335
+//[!done	& !passenger	& x=2	& y=2	& fuel=10	& jobs_done=0	& passenger_loc_x=0	& passenger_loc_y=4	& passenger_dest_x=0	& passenger_dest_y=0]
+	action WEST
+		1 : 1
 state 1
-//[pos=1]
-	action a3_up
-		0 : 0.3335
-		1 : 0.333
-		3 : 0.3335
+//[!done	& !passenger	& x=1	& y=2	& fuel=9	& jobs_done=0	& passenger_loc_x=0	& passenger_loc_y=4	& passenger_dest_x=0	& passenger_dest_y=0]
+	action WEST
+		2 : 1
 state 2
-//[pos=4]
-	action a0_left
-		0 : 0.3335
-		2 : 0.333
-		4 : 0.3335
+//[!done	& !passenger	& x=0	& y=2	& fuel=10	& jobs_done=0	& passenger_loc_x=0	& passenger_loc_y=4	& passenger_dest_x=0	& passenger_dest_y=0]
+	action WEST
+		3 : 1
 state 3
-//[pos=2]
-	action a3_up
-		1 : 0.3335
-		3 : 0.333
-		5 : 0.3335
+//[!done	& !passenger	& x=0	& y=2	& fuel=9	& jobs_done=0	& passenger_loc_x=0	& passenger_loc_y=4	& passenger_dest_x=0	& passenger_dest_y=0]
+	action WEST
+		4 : 1
 state 4
-//[pos=8]
-	action a1_down
-		4 : 0.3335
-		6 : 0.333
-		7 : 0.3335
+//[!done	& !passenger	& x=0	& y=2	& fuel=8	& jobs_done=0	& passenger_loc_x=0	& passenger_loc_y=4	& passenger_dest_x=0	& passenger_dest_y=0]
+	action WEST
+		5 : 1
 state 5
-//[pos=3]
-	action a3_up
-		3 : 0.3335
-		5 : 0.6665
+//[!done	& !passenger	& x=0	& y=2	& fuel=7	& jobs_done=0	& passenger_loc_x=0	& passenger_loc_y=4	& passenger_dest_x=0	& passenger_dest_y=0]
+	action WEST
+		6 : 1
 state 6
-//[pos=12]
-	action a1_down
-		8 : 1
+//[!done	& !passenger	& x=0	& y=2	& fuel=6	& jobs_done=0	& passenger_loc_x=0	& passenger_loc_y=4	& passenger_dest_x=0	& passenger_dest_y=0]
+	action WEST
+		7 : 1
 state 7
-//[pos=9]
-	action a1_down
-		4 : 0.3335
-		9 : 0.333
-		10 : 0.3335
+//[!done	& !passenger	& x=0	& y=2	& fuel=5	& jobs_done=0	& passenger_loc_x=0	& passenger_loc_y=4	& passenger_dest_x=0	& passenger_dest_y=0]
+	action WEST
+		8 : 1
 state 8
-//[pos=16]
-	action a1_down
-		8 : 1
+//[!done	& !passenger	& x=0	& y=2	& fuel=4	& jobs_done=0	& passenger_loc_x=0	& passenger_loc_y=4	& passenger_dest_x=0	& passenger_dest_y=0]
+	action NORTH
+		9 : 1
 state 9
-//[pos=13]
-	action a1_down
-		6 : 0.3335
-		9 : 0.333
-		11 : 0.3335
+//[!done	& !passenger	& x=0	& y=3	& fuel=3	& jobs_done=0	& passenger_loc_x=0	& passenger_loc_y=4	& passenger_dest_x=0	& passenger_dest_y=0]
+	action NORTH
+		10 : 1
 state 10
-//[pos=10]
-	action a1_down
-		7 : 0.3335
-		11 : 0.333
-		12 : 0.3335
+//[!done	& !passenger	& x=0	& y=4	& fuel=2	& jobs_done=0	& passenger_loc_x=0	& passenger_loc_y=4	& passenger_dest_x=0	& passenger_dest_y=0]
+	action NORTH
+		11 : 1
 state 11
-//[pos=14]
-	action a1_down
-		9 : 0.3335
-		11 : 0.333
-		13 : 0.3335
+//[!done	& !passenger	& x=0	& y=4	& fuel=1	& jobs_done=0	& passenger_loc_x=0	& passenger_loc_y=4	& passenger_dest_x=0	& passenger_dest_y=0]
+	action NORTH
+		12 : 1
 state 12
-//[pos=11]
-	action a1_down
-		8 : 1
-state 13 "((pos = 15) = true)"
-//[pos=15]
-	action __NOLABEL__
+//[!done	& !passenger	& x=0	& y=4	& fuel=0	& jobs_done=0	& passenger_loc_x=0	& passenger_loc_y=4	& passenger_dest_x=0	& passenger_dest_y=0]
+	action NORTH
+		13 : 1
+state 13
+//[done	& !passenger	& x=0	& y=4	& fuel=0	& jobs_done=0	& passenger_loc_x=0	& passenger_loc_y=4	& passenger_dest_x=0	& passenger_dest_y=0]
+	action NORTH
 		13 : 1
