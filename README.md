@@ -1,5 +1,7 @@
 # COOL-MC
-
+COOL-MC is a tool that combines state-of-the-art single-agent and multi-agent reinforcement learning with model checking. It builds upon the OpenAI gym and the probabilistic model checker Storm.
+COOL-MC includes a simulator for training policies in Markov decision processes (MDPs) using the OpenAI gym, a new model builder for Storm that verifies these policies using callback functions, and algorithms for obtaining performance bounds on permissive policies.
+It also measures the impact of adversarial attacks on policies and temporal logic properties, verifies the robustness of policies against adversarial attacks, and verifies countermeasures against these attacks.
 
 
 
@@ -15,7 +17,8 @@ The select_action method of the agent object is called to select an action based
 The Postprocessor object has a manipulate method that takes in the current state, action, reward, next state, and done flag, and returns modified versions of these variables.
 The step_learn method is then called to update the agent's knowledge based on the observed reward and next state.
 
-Finally, the episode_learn method is used by the agent for episodic learning (for example in REINFORCE).
+The episode_learn method is used by the agent for episodic learning (for example in REINFORCE).
+Finally, the model_checking_learn is used by the agent to learn via the model checking result.
 ```
 state = env.reset()
 done = False
@@ -31,7 +34,8 @@ agent.episode_learn()
 if prop_query == "":
     print("Reward:",episode_reward)
 else:
-    model_checking_result = model_checking(env,agent,Preprocessors, Postprocessor)
+    model_checking_result, model_checking_info = model_checking(env,agent,Preprocessors, Postprocessor)
+    agent.model_checking_learn(model_checking_result, model_checking_info, model_checker)
     print("Model Checking Result:", model_checking_result)
 ```
 
