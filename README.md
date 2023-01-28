@@ -114,22 +114,40 @@ constructor = stormpy.make_sparse_model_builder(prism_program, options,stormpy.S
 ```
 
 ## Setup
+This guide will walk you through the setup process for running COOL-MC, including installing Docker and Visual Studio Code, and setting up a local Docker container for the COOL-MC repository.
 
-Install Docker.
+### 1. Install Docker
+**To install Docker** on your system, you'll need to follow these general steps:
+1. Go to the Docker website (https://www.docker.com/) and click on the "Get Docker" button to download the installer for your operating system (Windows, Mac, or Linux).
+2. Run the installer and follow the prompts to complete the installation process.
+3. Once the installation is complete, you can verify that Docker is installed and running by opening a terminal or command prompt and running the command "docker --version". This should display the version of Docker that you have installed.
 
-Install VSCode.
+### 2. Install Visual Studio Code and some of its extensions
+Installing Visual Studio Code (VSCode) is a simple process, and can be done by following these steps:
 
-Add VSCode extensions: docker, Visual Studio Code Dev Containers
+1. Go to the Visual Studio Code website (https://code.visualstudio.com/) and click on the "Download" button for your operating system (Windows, Mac, or Linux).
+2. Once the download is complete, open the installer and follow the prompts to complete the installation process.
+3. Add VSCode extensions: docker, Visual Studio Code Dev Containers
 
+### 3. Create your local docker container and verify COOL-MC
 Open Remote Explorer, add (+), clone repository in container volume, add GITHUB-REPOSITORY URL, write coolmc volume, and coolmc target.
 Afterwards, the docker container will be created (it takes time).
 
+Next, you'll want to open the Remote Explorer in VSCode and add a new connection (+ button). You'll then want to clone your the COOL-MC repository into a container volume. To do this, you'll need to provide the GitHub repository https://github.com/DennisGross/COOL-MCv3 and specify the volume and target as "coolmc volume" and "coolmc target" respectively.
+
 Verify that everything works: `python run_tests.py`
 
-Start MLFlow server in the background: `mlflow server -h 0.0.0.0 &`
+## Examples
+For the visualization of the training process start MLFlow server in the background: `mlflow server -h 0.0.0.0 &`.
+
+The taxi agent has to pick up passengers and transport them to their destination without running out of fuel. The environment terminates as soon as the taxi agent does the predefined number of jobs. After the job is done, a new guest spawns randomly at one of the predefined locations.
+
+
+Run the following command to train a deep RL policy for the taxi environment:
+`python cool_mc.py --project_name="taxi_experiments" --constant_definitions="MAX_JOBS=2,MAX_FUEL=10" --prism_dir="../prism_files" --prism_file_path="transporter.prism" --seed=128 --layers=4 --neurons=512 --lr=0.0001 --batch_size=32 --num_episodes=200000 --eval_interval=100 --epsilon_dec=0.99999 --epsilon_min=0.1 --gamma=0.99 --epsilon=1 --replace=301 --reward_flag=0 --wrong_action_penalty=0 --prop="Pmax=? [ F jobs_done=2 ]" --max_steps=100 --replay_buffer_size=300000 --replace=304`
 
 ## Experiments
-To run the experiments from our paper, use the bash scripts in examples (*_experiments.sh).
+To run the experiments from our papers, use the bash scripts in examples (*_experiments.sh).
 
 
 ## Command Line Arguments
@@ -155,3 +173,43 @@ The following list contains all the major COOL-MC command line arguments. It doe
 | wrong_action_penalty | If an action is not available but still chosen by the policy, return a penalty of [DEFINED HERE].                                                                                                                                                                                           |                                                   |                |
 | reward_flag          | If true (1), the agent receives rewards instead of penalties.                                                                                                                                                                                                                               |                                                   | 0              |
 | seed                 | Random seed for PyTorch, Numpy, Python.                                                                                                                                                                                                                                                     | INTEGER NUMBER                                    | None (-1)      |
+
+
+## COOL-MC Publications
+
+COOL-MC: A Comprehensive Tool for Learning and Model Checking:
+`@inproceedings{gross2022cool,
+  title={COOL-MC: a comprehensive tool for reinforcement learning and model checking},
+  author={Gross, Dennis and Jansen, Nils and Junges, Sebastian and P{\'e}rez, Guillermo A},
+  booktitle={Dependable Software Engineering. Theories, Tools, and Applications: 8th International Symposium, SETTA 2022, Beijing, China, October 27-29, 2022, Proceedings},
+  pages={41--49},
+  year={2022},
+  organization={Springer}
+}`
+
+Targeted Adversarial Attacks on Deep Reinforcement Learning Policies via Model Checking:
+`
+@article{DBLP:journals/corr/abs-2212-05337,
+  author    = {Dennis Gross and
+               Thiago D. Sim{\~{a}}o and
+               Nils Jansen and
+               Guillermo A. P{\'{e}}rez},
+  title     = {Targeted Adversarial Attacks on Deep Reinforcement Learning Policies
+               via Model Checking},
+  journal   = {CoRR},
+  volume    = {abs/2212.05337},
+  year      = {2022}
+}
+`
+
+Turn-based Multi-Agent Reinforcement Learning Model Checking:
+`
+@article{grossturn,
+  title={Turn-based Multi-Agent Reinforcement Learning Model Checking},
+  author={Gross, Dennis}
+}
+`
+
+## Main Contributor
+The main contributor and developer of this repository is Dennis Gross.
+For any questions or inquiries related to the repository, write him an email via dgross@science.ru.nl.
