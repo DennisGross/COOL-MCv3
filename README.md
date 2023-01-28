@@ -117,7 +117,7 @@ constructor = stormpy.make_sparse_model_builder(prism_program, options,stormpy.S
 This guide will walk you through the setup process for running COOL-MC, including installing Docker and Visual Studio Code, and setting up a local Docker container for the COOL-MC repository.
 
 ### 1. Install Docker
-**To install Docker** on your system, you'll need to follow these general steps:
+To install Docker on your system, you'll need to follow these general steps:
 1. Go to the Docker website (https://www.docker.com/) and click on the "Get Docker" button to download the installer for your operating system (Windows, Mac, or Linux).
 2. Run the installer and follow the prompts to complete the installation process.
 3. Once the installation is complete, you can verify that Docker is installed and running by opening a terminal or command prompt and running the command "docker --version". This should display the version of Docker that you have installed.
@@ -148,6 +148,15 @@ Run the following command to train a deep RL policy for the taxi environment:
 
 ## Experiments
 To run the experiments from our papers, use the bash scripts in examples (*_experiments.sh).
+
+
+## PRISM Modeling Tips
+COOL-MC supports PRISM as a modeling language. It can be difficult to design your own PRISM environments. Here are some tips on how to make sure that your PRISM environment works correctly with COOL-MC:
+
+- Utilize transition rewards to ensure accurate modeling of your environment.
+- Keep in mind that when the agent reaches a terminal state, the storm simulator will terminate the simulation. As a result, transitions from terminal states will not be executed. Avoid using self-looping terminal states to avoid confusion.
+- To enhance training performance, make all actions available at every state. Failure to do so may result in the agent choosing an unavailable action and receiving a penalty.
+- Before beginning RL training, it's highly recommended to unit test your PRISM environment to ensure it behaves as intended.
 
 
 ## Command Line Arguments
