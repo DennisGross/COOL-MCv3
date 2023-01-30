@@ -151,7 +151,9 @@ To run the experiments from our papers, use the bash scripts in examples (*_expe
 
 
 ## PRISM Modeling Tips
-COOL-MC supports PRISM as a modeling language. It can be difficult to design your own PRISM environments. Here are some tips on how to make sure that your PRISM environment works correctly with COOL-MC:
+COOL-MC supports PRISM as a modeling language.
+To learn how to model environments via PRISM, we refer to the PRISM documentation (https://www.prismmodelchecker.org/).
+It can be difficult to design your own PRISM environments. Here are some tips on how to make sure that your PRISM environment works correctly with COOL-MC:
 
 - Utilize transition rewards to ensure accurate modeling of your environment.
 - Keep in mind that when the agent reaches a terminal state, the storm simulator will terminate the simulation. As a result, transitions from terminal states will not be executed. Avoid using self-looping terminal states to avoid confusion.
@@ -220,5 +222,6 @@ Turn-based Multi-Agent Reinforcement Learning Model Checking:
 `
 
 ## Main Contributor
-The main contributor and developer of this repository is Dennis Gross.
+The main developer of this repository is Dennis Gross.
 For any questions or inquiries related to the repository, write him an email via dgross@science.ru.nl.
+This tool is developed with helop from Nils Jansen, Sebastian Junges, and Guillermo A. Perez.
