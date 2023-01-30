@@ -221,7 +221,7 @@ Turn-based Multi-Agent Reinforcement Learning Model Checking:
 }
 `
 
-## Main Contributor
+## Contributors
 The main developer of this repository is Dennis Gross.
 For any questions or inquiries related to the repository, write him an email via dgross@science.ru.nl.
 This tool is developed with helop from Nils Jansen, Sebastian Junges, and Guillermo A. Perez.
