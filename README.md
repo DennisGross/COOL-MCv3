@@ -200,24 +200,22 @@ COOL-MC: A Comprehensive Tool for Learning and Model Checking:
 
 Targeted Adversarial Attacks on Deep Reinforcement Learning Policies via Model Checking:
 `
-@article{DBLP:journals/corr/abs-2212-05337,
-  author    = {Dennis Gross and
-               Thiago D. Sim{\~{a}}o and
-               Nils Jansen and
-               Guillermo A. P{\'{e}}rez},
-  title     = {Targeted Adversarial Attacks on Deep Reinforcement Learning Policies
-               via Model Checking},
-  journal   = {CoRR},
-  volume    = {abs/2212.05337},
-  year      = {2022}
+@inproceedings{Gross2023targeted,
+	title = { {Targeted Adversarial Attacks on Deep Reinforcement Learning Policies via Model Checking} },
+	author = {         Gross, Dennis and         Sim{\~a}o, Thiago D. and         Jansen, Nils and         P{\'e}rez, Guillermo A.      },
+	booktitle = { {ICAART} },
+	year = { 2023 },
+	url = { https://arxiv.org/abs/2212.05337 }
 }
-`
 
 Turn-based Multi-Agent Reinforcement Learning Model Checking:
 `
-@article{grossturn,
-  title={Turn-based Multi-Agent Reinforcement Learning Model Checking},
-  author={Gross, Dennis}
+@inproceedings{Gross2023targeted,
+	title = { {Turn-based Multi-Agent Reinforcement Learning Model Checking} },
+	author = {Dennis Gross},
+	booktitle = { {ICAART} },
+	year = { 2023 },
+	url = { }
 }
 `
 
