@@ -207,6 +207,7 @@ Targeted Adversarial Attacks on Deep Reinforcement Learning Policies via Model C
 	year = { 2023 },
 	url = { https://arxiv.org/abs/2212.05337 }
 }
+`
 
 Turn-based Multi-Agent Reinforcement Learning Model Checking:
 `
