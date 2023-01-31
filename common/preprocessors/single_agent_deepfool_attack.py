@@ -16,8 +16,8 @@ import gc
 
 class DeepFool(Preprocessor):
 
-    def __init__(self, state_mapper, attack_config_str: str) -> None:
-        super().__init__(state_mapper, attack_config_str)
+    def __init__(self, state_mapper, attack_config_str: str, task) -> None:
+        super().__init__(state_mapper, attack_config_str, task)
         self.parse_attack_config(attack_config_str)
 
     def parse_attack_config(self, attack_config_str: str) -> None:

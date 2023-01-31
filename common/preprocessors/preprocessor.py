@@ -2,10 +2,12 @@ import numpy as np
 
 class Preprocessor:
 
-    def __init__(self, state_mapper, config_str):
+    def __init__(self, state_mapper, config_str, task):
         self.state_mapper = state_mapper
         self.config_str = config_str
+        self.task = task
         self.buffer = {}
+
 
     def parse_config(self, config_str:str) -> None:
         """

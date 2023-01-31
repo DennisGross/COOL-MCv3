@@ -2,8 +2,8 @@ from common.preprocessors.preprocessor import Preprocessor
 import numpy as np
 class Normalizer(Preprocessor):
 
-    def __init__(self, state_mapper, config_str):
-        super().__init__(state_mapper, config_str)
+    def __init__(self, state_mapper, config_str, task):
+        super().__init__(state_mapper, config_str, task)
         self.denominator = self.parse_config(self.config_str)
 
     def parse_config(self, config_str:str) -> None:

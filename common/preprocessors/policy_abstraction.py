@@ -3,8 +3,8 @@ import numpy as np
 
 class PolicyAbstraction(Preprocessor):
 
-    def __init__(self, state_mapper, config_str):
-        super().__init__(state_mapper, config_str)
+    def __init__(self, state_mapper, config_str, task):
+        super().__init__(state_mapper, config_str, task)
         self.parse_config(self.config_str)
 
 

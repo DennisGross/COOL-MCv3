@@ -153,14 +153,13 @@ class ModelChecker():
                 for preprocessor in preprocessors:
                     state = preprocessor.preprocess(agent, state, env.action_mapper, current_action_name, True)
 
-            # Check if selected action is available..
-            # if not set action to the first available action
+            # Check if actions are available
             if len(available_actions) == 0:
                 return False
 
             cond1 = False
             selected_action = self.__get_action_for_state(env, agent, state)
-            #print(state, selected_action)
+            # Check if selected action is available
             if (selected_action in available_actions) is not True:
                 selected_action = available_actions[0]
 

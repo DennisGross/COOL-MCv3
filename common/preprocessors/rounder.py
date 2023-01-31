@@ -2,8 +2,8 @@ from common.preprocessors.preprocessor import Preprocessor
 import numpy as np
 class Rounder(Preprocessor):
 
-    def __init__(self, state_mapper, config_str):
-        super().__init__(state_mapper, config_str)
+    def __init__(self, state_mapper, config_str, task):
+        super().__init__(state_mapper, config_str, task)
         self.attack_name, self.rounding_type = self.parse_config(self.config_str)
 
     def parse_config(self, config_str:str) -> None:

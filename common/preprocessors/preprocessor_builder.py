@@ -8,6 +8,8 @@ from common.preprocessors.single_agent_deepfool_attack import *
 from common.preprocessors.single_agent_ffgsm import *
 # Countermeasures
 from common.preprocessors.rounder import *
+# Robustness
+from common.preprocessors.integer_l1_robustness import *
 
 '''
 HOW TO ADD MORE AGENTS?
@@ -35,31 +37,35 @@ class PreprocessorBuilder():
         for preprocessor_str in command_line_arguments['preprocessor'].split("#"):
             preprocessor_name = preprocessor_str.split(";")[0]
             if preprocessor_name == "normalizer":
-                preprocessor = Normalizer(state_mapper, preprocessor_str)
+                preprocessor = Normalizer(state_mapper, preprocessor_str, command_line_arguments['task'])
                 preprocessor.load(preprocessor_path)
                 preprocessors.append(preprocessor)
             elif preprocessor_name == "fgsm":
-                preprocessor = FGSM(state_mapper, preprocessor_str)
+                preprocessor = FGSM(state_mapper, preprocessor_str, command_line_arguments['task'])
                 preprocessor.load(preprocessor_path)
                 preprocessors.append(preprocessor)
             elif preprocessor_name == "deepfool":
-                preprocessor = DeepFool(state_mapper, preprocessor_str)
+                preprocessor = DeepFool(state_mapper, preprocessor_str, command_line_arguments['task'])
                 preprocessor.load(preprocessor_path)
                 preprocessors.append(preprocessor)
             elif preprocessor_name == "ffgsm":
-                preprocessor = FFGSM(state_mapper, preprocessor_str)
+                preprocessor = FFGSM(state_mapper, preprocessor_str, command_line_arguments['task'])
                 preprocessor.load(preprocessor_path)
                 preprocessors.append(preprocessor)
             elif preprocessor_name == "feature_remapping":
-                preprocessor = FeatureRemapper(state_mapper, preprocessor_str)
+                preprocessor = FeatureRemapper(state_mapper, preprocessor_str, command_line_arguments['task'])
                 preprocessor.load(preprocessor_path)
                 preprocessors.append(preprocessor)
             elif preprocessor_name == "policy_abstraction":
-                preprocessor = PolicyAbstraction(state_mapper, preprocessor_str)
+                preprocessor = PolicyAbstraction(state_mapper, preprocessor_str, command_line_arguments['task'])
                 preprocessor.load(preprocessor_path)
                 preprocessors.append(preprocessor)
             elif preprocessor_name == "rounder":
-                preprocessor = Rounder(state_mapper, preprocessor_str)
+                preprocessor = Rounder(state_mapper, preprocessor_str, command_line_arguments['task'])
+                preprocessor.load(preprocessor_path)
+                preprocessors.append(preprocessor)
+            elif preprocessor_name == "integer_l1_robustness":
+                preprocessor = IntegerL1Robustness(state_mapper, preprocessor_str, command_line_arguments['task'])
                 preprocessor.load(preprocessor_path)
                 preprocessors.append(preprocessor)
         return preprocessors
