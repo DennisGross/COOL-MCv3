@@ -115,7 +115,7 @@ interpreter = InterpreterBuilder.build_interpreter(interpreter_config)
 interpreter.interpret()
 ```
 
-### Interpretable Reinforcement Learning
+#### Interpretable Reinforcement Learning
 Interpretable Reinforcement Learning (IRL) focuses on making the decision-making process of reinforcement learning algorithms more transparent and understandable to human experts. It aims to bridge the gap between complex RL models, which can be difficult to interpret and understand, and human decision-making processes, which are often more intuitive and grounded in domain-specific knowledge.
 IRL has a wide range of potential applications, including robotics, autonomous vehicles, healthcare, and many others. It can help to build trust in autonomous systems and facilitate collaboration between humans and machines, which is critical in domains where human expertise is essential.
 
