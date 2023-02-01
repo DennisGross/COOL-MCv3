@@ -8,6 +8,7 @@ class IntegerL1Robustness(Preprocessor):
     def __init__(self, state_mapper, config_str, task):
         super().__init__(state_mapper, config_str, task)
         self.attack_name, self.epsilon, self.feature_indizes = self.parse_config(self.config_str)
+        self.all_possible_attacks = None
 
     def parse_config(self, config_str:str) -> None:
         """
@@ -55,19 +56,20 @@ class IntegerL1Robustness(Preprocessor):
         original_action_idx = rl_agent.select_action(state, deploy=True)
         original_action_name = action_mapper.action_index_to_action_name(original_action_idx)
         adv_state_buffer[original_action_name] = state
-        # Generate all possible l1-bounded attacks
-        grid = np.meshgrid(*arrays)
-        coord_list = [entry.ravel() for entry in grid]
-        points = np.vstack(coord_list).T
-        if len(self.feature_indizes) > 0:
-            # Only for specific features
-            for col in range(points.shape[1]):
-                target_feature = col in self.feature_indizes
-                if target_feature==False:
-                    points=points[~(points[:,col] != 0),:]
-        all_possible_attacks = list(points[np.absolute(points).sum(axis=1) <= self.epsilon,:])
+        if self.all_possible_attacks == None:
+            # Generate all possible l1-bounded attacks
+            grid = np.meshgrid(*arrays)
+            coord_list = [entry.ravel() for entry in grid]
+            points = np.vstack(coord_list).T
+            if len(self.feature_indizes) > 0:
+                # Only for specific features
+                for col in range(points.shape[1]):
+                    target_feature = col in self.feature_indizes
+                    if target_feature==False:
+                        points=points[~(points[:,col] != 0),:]
+            self.all_possible_attacks = list(points[np.absolute(points).sum(axis=1) <= self.epsilon,:])
         # Check all possible attacks and save the state if the action changes
-        for attack in all_possible_attacks:
+        for attack in self.all_possible_attacks:
             adv_state = state+np.array(attack)
             action_idx = rl_agent.select_action(adv_state,deploy=True)
             action_name = action_mapper.action_index_to_action_name(action_idx)

@@ -111,7 +111,20 @@ def callback_function(state_valuation, action_index):
     return cond1
 
 constructor = stormpy.make_sparse_model_builder(prism_program, options,stormpy.StateValuationFunctionActionMaskDouble(callback_function))
+interpreter = InterpreterBuilder.build_interpreter(interpreter_config)
+interpreter.interpret()
 ```
+
+### Interpretable Reinforcement Learning
+Interpretable Reinforcement Learning (IRL) focuses on making the decision-making process of reinforcement learning algorithms more transparent and understandable to human experts. It aims to bridge the gap between complex RL models, which can be difficult to interpret and understand, and human decision-making processes, which are often more intuitive and grounded in domain-specific knowledge.
+IRL has a wide range of potential applications, including robotics, autonomous vehicles, healthcare, and many others. It can help to build trust in autonomous systems and facilitate collaboration between humans and machines, which is critical in domains where human expertise is essential.
+
+COOL-MC allows the interpretation of trained RL policies on different ways via the command line argument `--interpreter`.
+This argument is used during the RL model checking, which interpretes the RL policy afer it got model checked.
+We currently support the interpretation of RL policies via decision trees.
+The decision tree is a type of interpretable machine learning method used for classification and regression problems. It is called interpretable because the resulting model is easy to understand and interpret by humans, making it an attractive option for applications where transparency and interpretability are important.
+Users have the possibility to extend COOL-MC with further IRL methods via the `common.interpreter` package.
+
 
 ## Setup
 This guide will walk you through the setup process for running COOL-MC, including installing Docker and Visual Studio Code, and setting up a local Docker container for the COOL-MC repository.

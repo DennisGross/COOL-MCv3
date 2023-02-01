@@ -103,6 +103,14 @@ class StateMapper:
         assert isinstance(mapped_state, np.ndarray)
         return mapped_state
 
+    def get_feature_names(self):
+        feature_names = []
+        for idx, name in enumerate(self.original_format):
+            if name not in self.disabled_features:
+                feature_names.append(name)
+        return feature_names
+
+
     def inverse_mapping(self, idx: int) -> Union[str, None]:
         """Map index to state variable name.
 

@@ -6,6 +6,7 @@ from common.utilities.training import *
 from typing import Any, Dict
 from common.utilities.project import Project
 from common.safe_gym.safe_gym import SafeGym
+from common.interpreter.interpreter_builder import *
 
 def prepare_prop(prop):
     prepared = False
@@ -30,6 +31,7 @@ if __name__ == '__main__':
     set_random_seed(command_line_arguments['seed'])
     # Command line arguments set up
     command_line_arguments['task'] = RL_MODEL_CHECKING_TASK
+    collect_label_and_states = (command_line_arguments['interpreter']!= '')
     # Get full prism_file_path
     prism_file_path = os.path.join(
         command_line_arguments['prism_dir'], command_line_arguments['prism_file_path'])
@@ -71,7 +73,7 @@ if __name__ == '__main__':
     m_project.mlflow_bridge.set_property_query_as_run_name(original_prop + " for " + command_line_arguments['constant_definitions'])
 
     # Model checking
-    mdp_reward_result, model_checking_info = env.storm_bridge.model_checker.induced_markov_chain(m_project.agent, m_project.preprocessors, env, m_project.command_line_arguments['constant_definitions'], m_project.command_line_arguments['prop'])
+    mdp_reward_result, model_checking_info = env.storm_bridge.model_checker.induced_markov_chain(m_project.agent, m_project.preprocessors, env, m_project.command_line_arguments['constant_definitions'], m_project.command_line_arguments['prop'], collect_label_and_states)
     m_project.mlflow_bridge.log_result(mdp_reward_result)
 
     run_id = m_project.mlflow_bridge.get_run_id()
@@ -82,6 +84,12 @@ if __name__ == '__main__':
     print(f'Model Checking Time:\t{model_checking_info["model_checking_time"]}')
     print("Constant definitions:\t" + m_project.command_line_arguments['constant_definitions'])
     print("Run ID: " + run_id)
-    #LastRunManager.write_last_run(m_project.command_line_arguments['project_name'], run_id)
+
+    # Interpreter
+    interpreter = InterpreterBuilder.build_interpreter(m_project.command_line_arguments['interpreter'])
+    if interpreter != None:
+        interpreter.interpret(env, m_project.agent, model_checking_info)
+
+
     m_project.save()
     m_project.close()

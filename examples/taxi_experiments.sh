@@ -1,6 +1,6 @@
 # 424bd610a4184c65a3510468d4ba6132
 #python cool_mc.py --project_name="taxi_experiments" --constant_definitions="MAX_JOBS=2,MAX_FUEL=10" --prism_dir="../prism_files" --prism_file_path="transporter.prism" --seed=128 --layers=4 --neurons=512 --lr=0.0001 --batch_size=32 --num_episodes=200000 --eval_interval=100 --epsilon_dec=0.99999 --epsilon_min=0.1 --gamma=0.99 --epsilon=1 --replace=301 --reward_flag=0 --wrong_action_penalty=0 --prop="Pmax=? [ F jobs_done=2 ]" --max_steps=100 --replay_buffer_size=300000 --replace=304
-#python cool_mc.py --parent_run_id="last" --project_name="taxi_experiments" --constant_definitions="MAX_JOBS=2,MAX_FUEL=10" --prism_dir="../prism_files" --prism_file_path="transporter.prism" --seed=128 --task="rl_model_checking" --prop="P=? [ F jobs_done=1 ]"
+python cool_mc.py --parent_run_id="424bd610a4184c65a3510468d4ba6132" --project_name="taxi_experiments" --constant_definitions="MAX_JOBS=2,MAX_FUEL=10" --prism_dir="../prism_files" --prism_file_path="transporter.prism" --seed=128 --task="rl_model_checking" --prop="P=? [ F jobs_done=1 ]" --interpreter="decision_tree"
 #python cool_mc.py --parent_run_id="last" --project_name="taxi_experiments" --constant_definitions="MAX_JOBS=2,MAX_FUEL=10" --prism_dir="../prism_files" --prism_file_path="transporter.prism" --seed=128 --task="rl_model_checking" --prop="P=? [ F jobs_done=2 ]"
 #python cool_mc.py --parent_run_id="last" --project_name="taxi_experiments" --constant_definitions="MAX_JOBS=2,MAX_FUEL=10" --prism_dir="../prism_files" --prism_file_path="transporter.prism" --seed=128 --task="rl_model_checking" --prop="P=? [ F \"empty\" ]"
 # Remapping
@@ -154,5 +154,10 @@
 #python cool_mc.py --project_name="taxi_experiments" --constant_definitions="MAX_JOBS=2,MAX_FUEL=10" --prism_dir="../prism_files" --prism_file_path="transporter.prism" --seed=128 --layers=4 --neurons=512 --lr=0.0001 --batch_size=32 --num_episodes=10000 --eval_interval=100 --epsilon_dec=0.99999 --epsilon_min=0.1 --gamma=0.99 --epsilon=1 --replace=301 --reward_flag=0 --wrong_action_penalty=0 --prop="Pmax=? [ F jobs_done=2 ]" --max_steps=100 --replay_buffer_size=10000 --replace=304
 
 
+#python cool_mc.py --parent_run_id="424bd610a4184c65a3510468d4ba6132" --project_name="taxi_experiments" --constant_definitions="MAX_JOBS=2,MAX_FUEL=10" --prism_dir="../prism_files" --prism_file_path="transporter.prism" --seed=128 --task="rl_model_checking" --prop="Pmax=? [ F \"empty\" ]" --preprocessor="integer_l1_robustness;1;fuel"
 
-python cool_mc.py --parent_run_id="424bd610a4184c65a3510468d4ba6132" --project_name="taxi_experiments" --constant_definitions="MAX_JOBS=2,MAX_FUEL=10" --prism_dir="../prism_files" --prism_file_path="transporter.prism" --seed=128 --task="rl_model_checking" --prop="Pmin=? [ F \"empty\" ]" --preprocessor="integer_l1_robustness;1;fuel"
+#python cool_mc.py --parent_run_id="424bd610a4184c65a3510468d4ba6132" --project_name="taxi_experiments" --constant_definitions="MAX_JOBS=2,MAX_FUEL=10" --prism_dir="../prism_files" --prism_file_path="transporter.prism" --seed=128 --task="rl_model_checking" --prop="Pmax=? [ F \"empty\" ]" --preprocessor="integer_l1_robustness;1;passenger_loc_x"
+
+#python cool_mc.py --parent_run_id="424bd610a4184c65a3510468d4ba6132" --project_name="taxi_experiments" --constant_definitions="MAX_JOBS=2,MAX_FUEL=10" --prism_dir="../prism_files" --prism_file_path="transporter.prism" --seed=128 --task="rl_model_checking" --prop="Pmax=? [ F \"empty\" ]" --preprocessor="integer_l1_robustness;1;done"
+
+#python cool_mc.py --parent_run_id="424bd610a4184c65a3510468d4ba6132" --project_name="taxi_experiments" --constant_definitions="MAX_JOBS=2,MAX_FUEL=10" --prism_dir="../prism_files" --prism_file_path="transporter.prism" --seed=128 --task="rl_model_checking" --prop="Pmax=? [ F \"empty\" ]" --preprocessor="integer_l1_robustness;2;fuel"

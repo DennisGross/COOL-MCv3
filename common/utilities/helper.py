@@ -63,6 +63,10 @@ def get_arguments() -> Dict[str, Any]:
     arg_parser.add_argument('--postprocessor', help='Manipulator configuration string.', type=str,
                             default='')
 
+    # Interpreter
+    arg_parser.add_argument('--interpreter', help='Interpreter configuration string.', type=str,
+                            default='')
+
 
     # Model Checking
     arg_parser.add_argument('--prop', help='Property Specification.', type=str,
