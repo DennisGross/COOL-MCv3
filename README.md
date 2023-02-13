@@ -5,7 +5,6 @@ COOL-MC includes a simulator for training policies in Markov decision processes 
 It also measures the impact of adversarial attacks on policies and temporal logic properties, verifies the robustness of policies against adversarial attacks, and verifies countermeasures against these attacks.
 
 
-
 ## Architecture
 We will first describe the main components of COOL-MC and then delve into the details.
 
@@ -119,7 +118,7 @@ interpreter.interpret()
 Interpretable Reinforcement Learning (IRL) focuses on making the decision-making process of reinforcement learning algorithms more transparent and understandable to human experts. It aims to bridge the gap between complex RL models, which can be difficult to interpret and understand, and human decision-making processes, which are often more intuitive and grounded in domain-specific knowledge.
 IRL has a wide range of potential applications, including robotics, autonomous vehicles, healthcare, and many others. It can help to build trust in autonomous systems and facilitate collaboration between humans and machines, which is critical in domains where human expertise is essential.
 
-COOL-MC allows the interpretation of trained RL policies on different ways via the command line argument `--interpreter`.
+COOL-MC allows the interpretation of trained RL policies in different ways via the command line argument `--interpreter`.
 This argument is used during the RL model checking, which interpretes the RL policy afer it got model checked.
 We currently support the interpretation of RL policies via decision trees.
 The decision tree is a type of interpretable machine learning method used for classification and regression problems. It is called interpretable because the resulting model is easy to understand and interpret by humans, making it an attractive option for applications where transparency and interpretability are important.
@@ -233,7 +232,8 @@ Turn-based Multi-Agent Reinforcement Learning Model Checking:
 }
 `
 
+
 ## Contributors
 The main developer of this repository is Dennis Gross.
 For any questions or inquiries related to the repository, write him an email via dgross@science.ru.nl.
-This tool is developed with helop from Nils Jansen, Sebastian Junges, and Guillermo A. Perez.
+This tool is developed with help from Nils Jansen, Sebastian Junges, and Guillermo A. Perez.
