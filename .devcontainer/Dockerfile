@@ -1,4 +1,4 @@
-FROM FROM ubuntu:22.04 #mcr.microsoft.com/devcontainers/base:focal
+FROM ubuntu:22.04 #mcr.microsoft.com/devcontainers/base:focal
 
 RUN apt-get update
 
