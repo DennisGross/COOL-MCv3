@@ -22,11 +22,11 @@
 	// Use 'postCreateCommand' to run commands after the container is created.
 	// "postCreateCommand": "uname -a",
     "postCreateCommand": "pip install -r /workspaces/coolmc/requirements.txt",
-    "postStartCommand": "mlflow server --h 0.0.0.0 &",
+    "postStartCommand": "mlflow server --h 0.0.0.0 &"
 
 	// Configure tool-specific properties.
 	// "customizations": {},
 
 	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
-	"remoteUser": "root"
+	//"remoteUser": "root"
 }
